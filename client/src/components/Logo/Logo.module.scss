@@ -1,0 +1,15 @@
+.wrapper{
+  display: grid;
+  grid-template-columns: 48px auto;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+}
+
+.logo{
+  max-width: 48px;
+}
+
+.title{
+  font-size: 32px;
+}

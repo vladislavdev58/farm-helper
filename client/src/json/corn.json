@@ -1,0 +1,17 @@
+{
+  "barley": {
+    "name": "Ячмень",
+    "quantity": 5000,
+    "cost": 5
+  },
+  "rye": {
+    "name": "Рожь",
+    "quantity": 8000,
+    "cost": 3
+  },
+  "wheat": {
+    "name": "Пшеница",
+    "quantity": 10000,
+    "cost": 2
+  }
+}
