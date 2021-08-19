@@ -6,6 +6,7 @@ import {Loader} from './Loader/Loader'
 import {useMessage} from '../hooks/message.hook'
 import CornStore from '../store/CornStore'
 import {TypeCorn} from '../types/types'
+import {runInAction} from 'mobx'
 
 type TypeForm = {
     name: string
@@ -35,9 +36,9 @@ export const AddCorn = () => {
                 Authorization: `Bearer: ${auth.token}`
             })
             const {corn} = data
-            // FIXME Убрать игнор
-            // @ts-ignore
-            CornStore.allCorn.push(corn)
+            runInAction(() => {
+                CornStore.allCorn = [...CornStore.allCorn, ...[corn]]
+            })
             message('Добавлено')
         } catch (e) {
 

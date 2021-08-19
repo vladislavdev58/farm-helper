@@ -5,6 +5,8 @@ import {useFormik} from 'formik'
 import {Loader} from '../Loader/Loader'
 import {useMessage} from '../../hooks/message.hook'
 import CornStore from '../../store/CornStore'
+import {DatePicker} from '../DatePicker'
+import {runInAction} from 'mobx'
 import {TypePoisons} from '../../types/types'
 
 type TypeForm = {
@@ -18,7 +20,7 @@ type MyProps = {
     fetchPoisons: () => void
 }
 
-export const AddPoisons:FC<MyProps> = ({fetchPoisons}) => {
+export const AddPoisons: FC<MyProps> = ({fetchPoisons}) => {
     const message = useMessage()
     const poisonsFormik = useFormik<TypeForm>({
         initialValues: {
@@ -28,8 +30,8 @@ export const AddPoisons:FC<MyProps> = ({fetchPoisons}) => {
             date: null
         },
         onSubmit: async (values) => {
-            console.log(values)
             await addHandler(values)
+            poisonsFormik.resetForm()
         }
     })
     const auth = useContext(AuthContext)
@@ -40,9 +42,9 @@ export const AddPoisons:FC<MyProps> = ({fetchPoisons}) => {
                 Authorization: `Bearer: ${auth.token}`
             })
             const {poison} = data
-            // FIXME Убрать игнор
-            // @ts-ignore
-            CornStore.allPoisons.push(poison)
+            runInAction(() => {
+                CornStore.allPoisons = [...CornStore.allPoisons, ...[poison]]
+            })
             message('Добавлено')
         } catch (e) {
 
@@ -70,13 +72,15 @@ export const AddPoisons:FC<MyProps> = ({fetchPoisons}) => {
                         </div>
 
                         <div className="input-field col s4">
-                            <input className='validate' onChange={poisonsFormik.handleChange} name='cost' type="number"/>
+                            <input className='validate' onChange={poisonsFormik.handleChange} name='cost'
+                                   type="number"/>
                             <label htmlFor="password">Стоимость</label>
                         </div>
 
                         <div className="input-field col s4">
-                            <input className='validate' onChange={poisonsFormik.handleChange} name='date' type='date'/>
-                            <label htmlFor="password">Дата</label>
+                            <DatePicker
+                                formik={poisonsFormik}
+                            />
                         </div>
                     </div>
                 </div>
