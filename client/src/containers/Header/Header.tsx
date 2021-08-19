@@ -19,7 +19,7 @@ export const Header:FC<MyProps> = ({isShow, setIsShow}) => {
                     </ul>
                     <ul className='right hide-on-med-and-down'>
                         <li>
-                            <Link className='black-text' to='/login'>Login</Link>
+                            <Link className='black-text' to='/login'>Авторизация</Link>
                         </li>
                         <li>
                             <Link className='black-text' to='/add-corn'>Зерно</Link>
