@@ -3,6 +3,9 @@ import {useFormik} from 'formik'
 import {AuthContext} from '../context/AuthContext'
 import {useHttp} from '../hooks/http.hook'
 import {Loader} from './Loader/Loader'
+import {useMessage} from '../hooks/message.hook'
+import CornStore from '../store/CornStore'
+import {TypeCorn} from '../types/types'
 
 type TypeForm = {
     name: string
@@ -11,6 +14,7 @@ type TypeForm = {
 }
 
 export const AddCorn = () => {
+    const message = useMessage()
     const cornFormik = useFormik<TypeForm>({
         initialValues: {
             name: '',
@@ -20,7 +24,7 @@ export const AddCorn = () => {
         onSubmit: async (values) => {
             console.log(values)
             addHandler(values)
-            alert('Добавлено')
+
         }
     })
     const auth = useContext(AuthContext)
@@ -30,7 +34,11 @@ export const AddCorn = () => {
             const data = await request('/api/corn/addCorn', 'POST', {...values}, {
                 Authorization: `Bearer: ${auth.token}`
             })
-            console.log(data)
+            const {corn} = data
+            // FIXME Убрать игнор
+            // @ts-ignore
+            CornStore.allCorn.push(corn)
+            message('Добавлено')
         } catch (e) {
 
         }

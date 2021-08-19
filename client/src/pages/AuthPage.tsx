@@ -1,27 +1,31 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {useHttp} from "../hooks/http.hook";
 import {AuthContext} from "../context/AuthContext";
+import {useMessage} from '../hooks/message.hook'
+
+type FormType = {
+    email: string
+    password: string
+}
 
 export const AuthPage = () => {
-    type FormType = {
-        email: string
-        password: string
-    }
     const [form, setForm] = useState<FormType>({
         email: '',
         password: ''
     })
+
+    const message = useMessage()
 
     const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         setForm({...form, [event.target.name]: event.target.value})
         console.log(form)
     }
     const auth = useContext(AuthContext)
-    const {loading, request} = useHttp()
+    const {loading, request, error, clearError} = useHttp()
     const registerHandler = async () => {
         try {
             const data = await request('/api/auth/register', 'POST', {...form})
-            console.log(data)
+            message(data.message)
         } catch (e) {
 
         }
@@ -35,6 +39,10 @@ export const AuthPage = () => {
 
         }
     }
+    useEffect(() => {
+        message(error)
+        clearError()
+    }, [error, message, clearError])
     return (
         <div className="container">
             <div className="row">

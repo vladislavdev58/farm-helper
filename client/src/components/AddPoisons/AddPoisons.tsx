@@ -3,6 +3,9 @@ import {useHttp} from '../../hooks/http.hook'
 import {AuthContext} from '../../context/AuthContext'
 import {useFormik} from 'formik'
 import {Loader} from '../Loader/Loader'
+import {useMessage} from '../../hooks/message.hook'
+import CornStore from '../../store/CornStore'
+import {TypePoisons} from '../../types/types'
 
 type TypeForm = {
     title: string
@@ -16,6 +19,7 @@ type MyProps = {
 }
 
 export const AddPoisons:FC<MyProps> = ({fetchPoisons}) => {
+    const message = useMessage()
     const poisonsFormik = useFormik<TypeForm>({
         initialValues: {
             title: '',
@@ -26,8 +30,6 @@ export const AddPoisons:FC<MyProps> = ({fetchPoisons}) => {
         onSubmit: async (values) => {
             console.log(values)
             await addHandler(values)
-            fetchPoisons()
-            alert('Добавлено')
         }
     })
     const auth = useContext(AuthContext)
@@ -37,7 +39,11 @@ export const AddPoisons:FC<MyProps> = ({fetchPoisons}) => {
             const data = await request('/api/poisons/add', 'POST', {...values}, {
                 Authorization: `Bearer: ${auth.token}`
             })
-            console.log(data)
+            const {poison} = data
+            // FIXME Убрать игнор
+            // @ts-ignore
+            CornStore.allPoisons.push(poison)
+            message('Добавлено')
         } catch (e) {
 
         }
