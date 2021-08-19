@@ -2,5 +2,5 @@
   "port": 80,
   "jwtSecret": "secretsecretniy",
   "mongoUrl": "mongodb+srv://blaobleo:V4h4rpF8mwcLZaA@cluster0.il6w3.mongodb.net/app?retryWrites=true&w=majority",
-  "baseUrl": "http:///23.111.202.139:80"
+  "baseUrl": "http:///test.ru"
 }
