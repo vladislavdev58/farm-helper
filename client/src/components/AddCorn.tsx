@@ -70,7 +70,7 @@ export const AddCorn = () => {
                         </div>
                     </div>
                 </div>
-                <button type='submit' className="btn waves-effect waves-light">Отправить
+                <button type='submit' className="btn waves-effect waves-light">Добавить
                     <i className="material-icons right">send</i>
                 </button>
             </div>
