@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect, useState} from 'react'
+import React, {useCallback, useContext, useEffect} from 'react'
 import {Pie} from 'react-chartjs-2/dist'
 import {CardMetric} from './CardMetric/CardMetric'
 import CornStore from '../store/CornStore'
@@ -8,6 +8,7 @@ import {TypeCorn} from '../types/types'
 import {runInAction} from 'mobx'
 import {observer} from 'mobx-react'
 import {Loader} from './Loader/Loader'
+import {Link} from 'react-router-dom'
 
 export const CornStatic = observer(() => {
 
@@ -39,7 +40,10 @@ export const CornStatic = observer(() => {
                 borderWidth: 1,
             },
         ],
-    } : {};
+    } : {}
+    if (loading) {
+        return <Loader/>
+    }
     return (
         <CardMetric
             text={'Общее количество зерна'}
@@ -50,7 +54,10 @@ export const CornStatic = observer(() => {
                     data={data}
                 />
             ) : (
-                <Loader/>
+                <>
+                    <p>Для начала заполните данные</p>
+                    <Link to='/add-corn'>Заполнить</Link>
+                </>
             )}
 
         </CardMetric>

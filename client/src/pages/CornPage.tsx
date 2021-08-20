@@ -2,7 +2,6 @@ import React, {useState} from 'react'
 import {MainLayout} from '../layouts/MainLayout/MainLayout'
 import {AddCorn} from '../components/AddCorn'
 import {CornTable} from '../components/CornTable'
-import {observer} from 'mobx-react'
 
 export const CornPage = () => {
     const [isShowForm, setIsShowForm] = useState<boolean>(false)

@@ -5,7 +5,6 @@ import {useHttp} from '../hooks/http.hook'
 import {Loader} from './Loader/Loader'
 import {useMessage} from '../hooks/message.hook'
 import CornStore from '../store/CornStore'
-import {TypeCorn} from '../types/types'
 import {runInAction} from 'mobx'
 
 type TypeForm = {

@@ -16,7 +16,6 @@ class CornStore {
             return item.name
         })
         return result
-        console.log(result)
     }
 
     getAllWeight = () => {
@@ -24,7 +23,6 @@ class CornStore {
             return item.weight
         })
         return result
-        console.log(result)
     }
 
     getAllColor = (index: number) => {
@@ -32,7 +30,6 @@ class CornStore {
             return item.color[index]
         })
         return result
-        console.log(result)
     }
 }
 

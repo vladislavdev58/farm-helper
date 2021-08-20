@@ -7,7 +7,6 @@ import {useMessage} from '../../hooks/message.hook'
 import CornStore from '../../store/CornStore'
 import {DatePicker} from '../DatePicker'
 import {runInAction} from 'mobx'
-import {TypePoisons} from '../../types/types'
 
 type TypeForm = {
     title: string
