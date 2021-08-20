@@ -18,7 +18,6 @@ export const AuthPage = () => {
 
     const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         setForm({...form, [event.target.name]: event.target.value})
-        console.log(form)
     }
     const auth = useContext(AuthContext)
     const {loading, request, error, clearError} = useHttp()
@@ -34,7 +33,7 @@ export const AuthPage = () => {
     const loginHandler = async () => {
         try {
             const data = await request('/api/auth/login', 'POST', {...form})
-            auth.login(data.token, data.id)
+            auth.login(data.token, data.userId)
         } catch (e) {
 
         }
