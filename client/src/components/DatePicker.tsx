@@ -16,7 +16,7 @@ export const DatePicker:FC<MyProps> = ({format = 'yyyy-mm-dd', formik, label = '
     const dateRef = useRef<any>()
     useEffect(() => {
         (window as any).M.Datepicker.init(dateRef.current, options)
-        // eslint-disable-next-line 
+        // eslint-disable-next-line
     }, [dateRef.current])
     return (
         <>
