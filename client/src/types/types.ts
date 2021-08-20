@@ -5,7 +5,7 @@ export type TypePoisons = {
     sum: number
     date: string
     owner: string
-    title: string
+    name: string
     weight: number
 }
 

@@ -2,6 +2,7 @@ import React from 'react'
 import CornStore from '../store/CornStore'
 import {observer} from 'mobx-react'
 import {CornTableItem} from './CornTableItem'
+import {runInAction} from 'mobx'
 
 type MyProps = {
     _id: string
@@ -15,13 +16,23 @@ export const CornTable = observer(() => {
     if (!CornStore.allCorn.length) {
         return <p>Пусто</p>
     }
+    const sortBy = (name: string) => {
+        runInAction(() => {
+            CornStore.allCorn.sort((a:any, b:any) => a[name] < b[name] ? 1 : -1)
+        })
+    }
+    const sortByName = () => {
+        runInAction(() => {
+            CornStore.allCorn.sort((a:any,b:any) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
+        })
+    }
     return (
         <table>
             <thead>
             <tr>
-                <th>Название</th>
-                <th>Объем</th>
-                <th>Стоимость</th>
+                <th onClick={sortByName}>Название</th>
+                <th onClick={() => sortBy('weight')}>Объем</th>
+                <th onClick={() => sortBy('cost')}>Стоимость</th>
                 <th>Редактировать</th>
             </tr>
             </thead>

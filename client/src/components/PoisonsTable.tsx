@@ -1,9 +1,22 @@
 import React from 'react'
 import CornStore from '../store/CornStore'
 import {observer} from 'mobx-react'
+import {runInAction, toJS} from 'mobx'
 
 
 export const PoisonsTable = observer(() => {
+    // FIXME подумать над дублированием и убрать any
+    const sortBy = (name: string) => {
+        runInAction(() => {
+            CornStore.allPoisons.sort((a:any, b:any) => a[name] < b[name] ? 1 : -1)
+        })
+    }
+    const sortByName = () => {
+        console.log(toJS(CornStore.allPoisons))
+        runInAction(() => {
+            CornStore.allPoisons.sort((a:any,b:any) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
+        })
+    }
     if (!CornStore.allPoisons.length) {
         return (
             <p>Пусто</p>
@@ -13,11 +26,11 @@ export const PoisonsTable = observer(() => {
         <table>
             <thead>
             <tr>
-                <th>Название</th>
-                <th>Объем(кг)</th>
-                <th>Цена(руб)</th>
-                <th>Стоимость(кг/р)</th>
-                <th>Дата</th>
+                <th onClick={sortByName}>Название</th>
+                <th onClick={() => sortBy('weight')}>Объем(кг)</th>
+                <th onClick={() => sortBy('cost')}>Цена(руб)</th>
+                <th onClick={() => sortBy('sum')}>Стоимость(кг/р)</th>
+                <th onClick={() => sortBy('date')}>Дата</th>
             </tr>
             </thead>
 
@@ -26,7 +39,7 @@ export const PoisonsTable = observer(() => {
                 CornStore.allPoisons.map((item, index) => {
                     return (
                         <tr key={item._id}>
-                            <td>{item.title}</td>
+                            <td>{item.name}</td>
                             <td>{item.weight}</td>
                             <td>{item.cost}</td>
                             <td>{item.sum}</td>

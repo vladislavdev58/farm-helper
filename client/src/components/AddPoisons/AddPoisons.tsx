@@ -9,7 +9,7 @@ import {DatePicker} from '../DatePicker'
 import {runInAction} from 'mobx'
 
 type TypeForm = {
-    title: string
+    name: string
     weight: number
     cost: number
     date: Date | null
@@ -23,7 +23,7 @@ export const AddPoisons: FC<MyProps> = ({fetchPoisons}) => {
     const message = useMessage()
     const poisonsFormik = useFormik<TypeForm>({
         initialValues: {
-            title: '',
+            name: '',
             weight: 0,
             cost: 0,
             date: null
@@ -58,7 +58,7 @@ export const AddPoisons: FC<MyProps> = ({fetchPoisons}) => {
                 <div className="col s12">
                     <div className="row">
                         <div className="input-field col s12">
-                            <input className='validate' onChange={poisonsFormik.handleChange} name='title' type="text"/>
+                            <input className='validate' onChange={poisonsFormik.handleChange} name='name' type="text"/>
                             <label htmlFor="password">Название яда</label>
                         </div>
                     </div>

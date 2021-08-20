@@ -6,7 +6,7 @@ type MyProps = {
     isShow: boolean,
     setIsShow: (value: boolean) => void
 }
-export const Header:FC<MyProps> = ({isShow, setIsShow}) => {
+export const Header: FC<MyProps> = ({isShow, setIsShow}) => {
     const styleMenu = {
         cursor: 'pointer',
         fontSize: 32
@@ -17,15 +17,12 @@ export const Header:FC<MyProps> = ({isShow, setIsShow}) => {
             <nav className='light-blue lighten-5 black-text'>
                 <div className="nav-wrapper">
                     <ul className="left hide-on-med-and-down">
-                        <li><span onClick={() => setIsShow(!isShow)}><i className="material-icons" style={styleMenu}>menu</i></span></li>
+                        <li><span onClick={() => setIsShow(!isShow)}><i className="material-icons"
+                                                                        style={styleMenu}>menu</i></span></li>
                     </ul>
                     <ul className='right hide-on-med-and-down'>
                         <li>
-                            {auth.isAuthenticated ? (
-                                <a className='black-text' onClick={() => auth.logout()}>Выйти</a>
-                            ) : (
-                                <Link className='black-text' to='/login'>Авторизация</Link>
-                            )}
+                            <a className='black-text' onClick={() => auth.logout()}>Выйти</a>
                         </li>
                         <li>
                             <Link className='black-text' to='/add-corn'>Зерно</Link>
