@@ -9,7 +9,6 @@ router.post('/addCorn', auth, async (req, res) => {
     try {
         const {name, weight, cost} = req.body
         const color = randomcolor({count: 2})
-        console.log(color)
         const corn = new Corn({
             name, weight, cost, color ,owner: req.user.userId
         })
