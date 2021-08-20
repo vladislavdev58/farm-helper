@@ -60,8 +60,8 @@ export const EditCorn: FC<MyProps> = ({_id, name, weight, cost, id, index}) => {
     }
 
     return (
-        <Modals textLink={iconEdit} id={id} modalTitle={'Редактирование зерна'} textCloseBtn={'Отправить'} closeFunc={cornFormik.handleSubmit}>
-            <form>
+        <Modals textLink={iconEdit} id={id} modalTitle={'Редактирование зерна'} textCloseBtn={'Закрыть'}>
+            <form onSubmit={cornFormik.handleSubmit}>
                 <div className="row">
                     <div className="col s4">
                         <input className='validate' onChange={cornFormik.handleChange} defaultValue={cornFormik.values.name} name='name' type="text"/>
@@ -77,6 +77,9 @@ export const EditCorn: FC<MyProps> = ({_id, name, weight, cost, id, index}) => {
                         <label htmlFor="password">Стоимость</label>
                     </div>
                 </div>
+                <button type='submit' className="btn waves-effect waves-light">Отправить
+                    <i className="material-icons right">send</i>
+                </button>
             </form>
         </Modals>
     )

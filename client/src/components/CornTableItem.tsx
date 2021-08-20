@@ -10,7 +10,6 @@ type MyProps = {
 }
 
 export const CornTableItem: FC<MyProps> = ({_id, name, weight, cost, index}) => {
-
     return (
         <>
             <tr key={_id}>

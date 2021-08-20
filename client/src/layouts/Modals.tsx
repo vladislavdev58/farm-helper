@@ -1,15 +1,16 @@
 import React, {FC, useEffect, useRef} from 'react'
+import CornStore from '../store/CornStore'
 
 type MyProps = {
     textLink: string | JSX.Element
     id: string
     modalTitle: string
     textCloseBtn?: string
-    closeFunc: () => void
 }
 
-export const Modals: FC<MyProps> = ({textLink, id, modalTitle, textCloseBtn = 'Закрыть', children, closeFunc}) => {
+export const Modals: FC<MyProps> = ({textLink, id, modalTitle, textCloseBtn = 'Закрыть', children}) => {
     const modalRef = useRef<any>()
+    const btnCloseRef = useRef<any>()
     const options = {
         inDuration: 250,
         outDuration: 250,
@@ -17,11 +18,21 @@ export const Modals: FC<MyProps> = ({textLink, id, modalTitle, textCloseBtn = '�
         dismissible: false,
         startingTop: '4%',
         endingTop: '10%',
-        onCloseEnd: closeFunc
     }
     useEffect(() => {
+        const instance = (window as any).M.Modal.getInstance(modalRef.current)
+        if (instance) {
+            instance.close()
+        }
         (window as any).M.Modal.init(modalRef.current, options)
         // eslint-disable-next-line
+    }, [CornStore.allCorn])
+
+    useEffect(() => {
+        const btn = btnCloseRef.current
+        return () => {
+            btn.click()
+        }
     }, [])
     return (
         <>
@@ -32,7 +43,7 @@ export const Modals: FC<MyProps> = ({textLink, id, modalTitle, textCloseBtn = '�
                     {children}
                 </div>
                 <div className="modal-footer">
-                    <span className="modal-close waves-effect waves-green btn-flat">{textCloseBtn}</span>
+                    <span className="modal-close waves-effect waves-green btn-flat" ref={btnCloseRef}>{textCloseBtn}</span>
                 </div>
             </div>
         </>
