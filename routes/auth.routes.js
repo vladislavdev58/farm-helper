@@ -80,7 +80,6 @@ router.post(
                 config.get('jwtSecret'),
                 {expiresIn: '1h'}
             )
-            console.log({userId: user._id})
             res.json({token, userId: user._id})
 
         } catch (e) {

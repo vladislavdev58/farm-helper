@@ -2,6 +2,7 @@ export type TypePoisons = {
     __v: string
     _id: string
     cost: number
+    sum: number
     date: string
     owner: string
     title: string

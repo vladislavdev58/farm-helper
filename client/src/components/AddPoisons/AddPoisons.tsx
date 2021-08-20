@@ -67,13 +67,13 @@ export const AddPoisons: FC<MyProps> = ({fetchPoisons}) => {
                         <div className="input-field col s4">
                             <input className='validate' onChange={poisonsFormik.handleChange} name='weight'
                                    type="number"/>
-                            <label htmlFor="password">Объем</label>
+                            <label htmlFor="password">Объем(кг)</label>
                         </div>
 
                         <div className="input-field col s4">
                             <input className='validate' onChange={poisonsFormik.handleChange} name='cost'
                                    type="number"/>
-                            <label htmlFor="password">Стоимость</label>
+                            <label htmlFor="password">Цена(руб)</label>
                         </div>
 
                         <div className="input-field col s4">

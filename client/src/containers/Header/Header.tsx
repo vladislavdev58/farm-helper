@@ -1,5 +1,6 @@
-import React, {FC} from 'react'
+import React, {FC, useContext} from 'react'
 import {Link} from 'react-router-dom'
+import {AuthContext} from '../../context/AuthContext'
 
 type MyProps = {
     isShow: boolean,
@@ -10,6 +11,7 @@ export const Header:FC<MyProps> = ({isShow, setIsShow}) => {
         cursor: 'pointer',
         fontSize: 32
     }
+    const auth = useContext(AuthContext)
     return (
         <div>
             <nav className='light-blue lighten-5 black-text'>
@@ -19,7 +21,11 @@ export const Header:FC<MyProps> = ({isShow, setIsShow}) => {
                     </ul>
                     <ul className='right hide-on-med-and-down'>
                         <li>
-                            <Link className='black-text' to='/login'>Авторизация</Link>
+                            {auth.isAuthenticated ? (
+                                <a className='black-text' onClick={() => auth.logout()}>Выйти</a>
+                            ) : (
+                                <Link className='black-text' to='/login'>Авторизация</Link>
+                            )}
                         </li>
                         <li>
                             <Link className='black-text' to='/add-corn'>Зерно</Link>

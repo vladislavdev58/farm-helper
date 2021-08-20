@@ -19,9 +19,8 @@ export const useRoutes = (isAuthenticated: boolean) => {
 
     return (
         <Switch>
-            <Route exact path={'/'} component={DashboardPage}/>
             <Route exact path={'/login'} component={AuthPage}/>
-            <Redirect to='/'/>
+            <Redirect to='/login'/>
         </Switch>
     )
 }

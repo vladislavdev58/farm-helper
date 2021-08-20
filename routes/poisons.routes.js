@@ -7,8 +7,9 @@ const config = require('config')
 router.post('/add', auth, async (req, res) => {
     try {
         const {title, weight, cost, date} = req.body
+        const sum = cost * weight
         const poison = new Poisons({
-            title, weight, cost, date, owner: req.user.userId
+            title, weight, cost, sum, date, owner: req.user.userId
         })
         await poison.save()
         res.status(201).json({poison})
