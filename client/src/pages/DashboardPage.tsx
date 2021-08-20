@@ -4,28 +4,10 @@ import {CardMetric} from '../components/CardMetric/CardMetric'
 import {Pie, Bar, Line} from 'react-chartjs-2/dist'
 import CornStore from '../store/CornStore'
 import {observer} from 'mobx-react'
+import {CornStatic} from '../components/CornStatic'
 
 export const DashboardPage = observer(() => {
-    const allCorn = {
-        labels: CornStore.getAllName(),
-        datasets: [
-            {
-                label: '# of Votes',
-                data: CornStore.getAllWeight(),
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)'
-                ],
-                borderWidth: 1,
-            },
-        ],
-    };
+
 
     const allSale = {
         labels: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октрябрь','Ноябрь', 'Декабрь'],
@@ -95,14 +77,7 @@ export const DashboardPage = observer(() => {
         <MainLayout>
             <h2>Панель приборов</h2>
             <div className='row'>
-                <CardMetric
-                text={'Общее количество зерна'}
-                col={3}
-                >
-                    <Pie
-                        data={allCorn}
-                    />
-                </CardMetric>
+                <CornStatic/>
                 <CardMetric
                     text={'Продажи по месяцам'}
                     col={6}

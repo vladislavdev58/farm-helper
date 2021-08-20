@@ -3,12 +3,15 @@ const Corn = require('../models/Corn')
 const router = Router()
 const auth = require('../moddleware/auth.moddleware')
 const config = require('config')
+const randomcolor = require('randomcolor')
 
 router.post('/addCorn', auth, async (req, res) => {
     try {
         const {name, weight, cost} = req.body
+        const color = randomcolor({count: 2})
+        console.log(color)
         const corn = new Corn({
-            name, weight, cost, owner: req.user.userId
+            name, weight, cost, color ,owner: req.user.userId
         })
         await corn.save()
         res.status(201).json({corn})

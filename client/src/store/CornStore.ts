@@ -27,6 +27,15 @@ class CornStore {
         console.log(result)
     }
 
+    getAllColor = (index: number) => {
+        const result: Array<string> = this.allCorn.map(item => {
+            return item.color[index]
+        })
+        return result
+        console.log(result)
+    }
 }
+
+
 
 export default new CornStore()

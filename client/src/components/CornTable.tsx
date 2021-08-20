@@ -3,6 +3,7 @@ import CornStore from '../store/CornStore'
 import {observer} from 'mobx-react'
 
 export const CornTable = observer(() => {
+    console.log(CornStore.allCorn.length)
     if (!CornStore.allCorn.length) {
         return <p>Пусто</p>
     }

@@ -15,4 +15,5 @@ export type TypeCorn = {
     owner: string
     name: string
     weight: number
+    color: string[]
 }
