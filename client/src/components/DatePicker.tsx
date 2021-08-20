@@ -12,6 +12,7 @@ export const DatePicker:FC<MyProps> = ({format = 'yyyy-mm-dd', formik, label = '
         format: format,
         onSelect: (value:string) => formik.setFieldValue('date', value, true)
     }
+    // FIXME заменить any
     const dateRef = useRef<any>()
     useEffect(() => {
         (window as any).M.Datepicker.init(dateRef.current, options)

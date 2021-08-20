@@ -12,19 +12,18 @@ type MyProps = {
 }
 
 export const CornTable = observer(() => {
-    console.log(CornStore.allCorn.length)
-    if (!CornStore.allCorn.length) {
-        return <p>Пусто</p>
-    }
     const sortBy = (name: string) => {
         runInAction(() => {
-            CornStore.allCorn.sort((a:any, b:any) => a[name] < b[name] ? 1 : -1)
+            CornStore.allCorn.sort((a: any, b: any) => a[name] < b[name] ? 1 : -1)
         })
     }
     const sortByName = () => {
         runInAction(() => {
-            CornStore.allCorn.sort((a:any,b:any) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
+            CornStore.allCorn.sort((a: any, b: any) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
         })
+    }
+    if (!CornStore.allCorn.length) {
+        return <p>Пусто</p>
     }
     return (
         <table>
@@ -39,8 +38,9 @@ export const CornTable = observer(() => {
 
             <tbody>
             {
-                CornStore.allCorn.map((item) =>
-                    <CornTableItem _id={item._id} name={item.name} weight={item.weight} cost={item.cost} key={item._id}/>
+                CornStore.allCorn.map((item, index) =>
+                    <CornTableItem _id={item._id} name={item.name} weight={item.weight} cost={item.cost}
+                                   key={item._id} index={index}/>
                 )
             }
             </tbody>

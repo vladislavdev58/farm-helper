@@ -1,17 +1,20 @@
 import React, {FC, useContext} from 'react'
+import {Modals} from '../layouts/Modals'
 import {useMessage} from '../hooks/message.hook'
 import {useFormik} from 'formik'
 import {AuthContext} from '../context/AuthContext'
 import {useHttp} from '../hooks/http.hook'
+import {Loader} from '../components/Loader/Loader'
 import {runInAction} from 'mobx'
 import CornStore from '../store/CornStore'
-import {Loader} from './Loader/Loader'
 
 type MyProps = {
     _id: string
     name: string
     weight: number
     cost: number
+    id: string
+    index: number
 }
 
 type TypeForm = {
@@ -21,8 +24,10 @@ type TypeForm = {
     _id?: string
 }
 
-export const EditCorn: FC<MyProps> = ({_id, name, weight, cost}) => {
-    const message = useMessage()
+export const EditCorn: FC<MyProps> = ({_id, name, weight, cost, id, index}) => {
+    const iconEdit = (<i className="material-icons">edit</i>)
+
+    const showMessage = useMessage()
     const cornFormik = useFormik<TypeForm>({
         initialValues: {
             name,
@@ -31,7 +36,6 @@ export const EditCorn: FC<MyProps> = ({_id, name, weight, cost}) => {
         },
         onSubmit: async (values) => {
             await editHandler(values)
-
         }
     })
     const auth = useContext(AuthContext)
@@ -42,11 +46,11 @@ export const EditCorn: FC<MyProps> = ({_id, name, weight, cost}) => {
             const data = await request('/api/corn/edit', 'POST', {...values}, {
                 Authorization: `Bearer: ${auth.token}`
             })
-            const {corn} = data
-            // runInAction(() => {
-            //     CornStore.allCorn = [...CornStore.allCorn, ...[corn]]
-            // })
-            message(data.message)
+            const {corn, message} = data
+            runInAction(() => {
+                CornStore.allCorn[index] = corn
+            })
+            showMessage(message)
         } catch (e) {
 
         }
@@ -54,9 +58,10 @@ export const EditCorn: FC<MyProps> = ({_id, name, weight, cost}) => {
     if (loading) {
         return <Loader/>
     }
+
     return (
-        <div>
-            <form onSubmit={cornFormik.handleSubmit}>
+        <Modals textLink={iconEdit} id={id} modalTitle={'Редактирование зерна'} textCloseBtn={'Отправить'} closeFunc={cornFormik.handleSubmit}>
+            <form>
                 <div className="row">
                     <div className="col s4">
                         <input className='validate' onChange={cornFormik.handleChange} defaultValue={cornFormik.values.name} name='name' type="text"/>
@@ -72,10 +77,7 @@ export const EditCorn: FC<MyProps> = ({_id, name, weight, cost}) => {
                         <label htmlFor="password">Стоимость</label>
                     </div>
                 </div>
-                <button type='submit' className="btn waves-effect waves-light">Отправить
-                    <i className="material-icons right">send</i>
-                </button>
             </form>
-        </div>
+        </Modals>
     )
 }

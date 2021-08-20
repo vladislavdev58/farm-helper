@@ -10,7 +10,7 @@ router.post('/addCorn', auth, async (req, res) => {
         const {name, weight, cost} = req.body
         const color = randomcolor({count: 2})
         const corn = new Corn({
-            name, weight, cost, color ,owner: req.user.userId
+            name, weight, cost, color, owner: req.user.userId
         })
         await corn.save()
         res.status(201).json({corn})
@@ -31,8 +31,8 @@ router.get('/getList', auth, async (req, res) => {
 router.post('/edit', auth, async (req, res) => {
     try {
         const {_id, name, weight, cost} = req.body
-        const corn = await Corn.findByIdAndUpdate(_id, {name, weight, cost})
-        res.status(201).json({message: `${name} - изменено!`})
+        const corn = await Corn.findByIdAndUpdate(_id, {name, weight, cost}, {new: true})
+        res.status(201).json({message: `${name} - изменено!`, corn})
     } catch (e) {
         res.status(500).json({message: 'Что-то пошло не так'})
     }
