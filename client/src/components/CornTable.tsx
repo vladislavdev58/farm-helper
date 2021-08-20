@@ -4,13 +4,6 @@ import {observer} from 'mobx-react'
 import {CornTableItem} from './CornTableItem'
 import {runInAction} from 'mobx'
 
-type MyProps = {
-    _id: string
-    name: string
-    weight: number
-    cost: number
-}
-
 export const CornTable = observer(() => {
     const sortBy = (name: string) => {
         runInAction(() => {

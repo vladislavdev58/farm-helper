@@ -21,17 +21,18 @@ export const Modals: FC<MyProps> = ({textLink, id, modalTitle, textCloseBtn = 'Ð
     }
     useEffect(() => {
         (window as any).M.Modal.init(modalRef.current, options)
-    }, [modalRef])
+        // eslint-disable-next-line
+    }, [])
     return (
         <>
-            <a className="waves-effect waves-light btn modal-trigger" data-target={id}>{textLink}</a>
+            <span className="waves-effect waves-light btn modal-trigger" data-target={id}>{textLink}</span>
             <div className="modal" id={id} ref={modalRef}>
                 <div className="modal-content">
                     <h4>{modalTitle}</h4>
                     {children}
                 </div>
                 <div className="modal-footer">
-                    <a className="modal-close waves-effect waves-green btn-flat">{textCloseBtn}</a>
+                    <span className="modal-close waves-effect waves-green btn-flat">{textCloseBtn}</span>
                 </div>
             </div>
         </>
