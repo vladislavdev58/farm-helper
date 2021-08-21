@@ -26,6 +26,7 @@ export const CornTable = observer(() => {
                 <th onClick={() => sortBy('weight')}>Объем</th>
                 <th onClick={() => sortBy('cost')}>Стоимость</th>
                 <th>Редактировать</th>
+                <th>Удалить</th>
             </tr>
             </thead>
 

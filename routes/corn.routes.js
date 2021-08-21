@@ -38,4 +38,14 @@ router.post('/edit', auth, async (req, res) => {
     }
 })
 
+router.delete('/delete', auth, async (req, res) => {
+    try {
+        const {_id, name} = req.body
+        await Corn.findByIdAndDelete(_id)
+        res.status(201).json({message: `${name} - удалено!`})
+    } catch (e) {
+        res.status(500).json({message: 'Что-то пошло не так'})
+    }
+})
+
 module.exports = router
