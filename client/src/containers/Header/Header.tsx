@@ -30,6 +30,9 @@ export const Header: FC<MyProps> = ({isShow, setIsShow}) => {
                         <li>
                             <Link className='black-text' to='/poisons'>Яды</Link>
                         </li>
+                        <li>
+                            <Link className='black-text' to='/add-sale'>Продажи</Link>
+                        </li>
                     </ul>
                 </div>
             </nav>

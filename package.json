@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production node app.js",
+    "start": "cross-env NODE_ENV=production nohup node app.js &",
     "server": "nodemon app.js",
     "client": "npm run start --prefix client",
     "client:install": "npm install --prefix client",
@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/vladislavdev58/farm-helper-server#readme",
   "dependencies": {
+    "@material-ui/core": "^4.12.3",
     "bcryptjs": "^2.4.3",
     "config": "^3.3.6",
     "cross-env": "^7.0.3",

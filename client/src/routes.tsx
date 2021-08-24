@@ -4,6 +4,7 @@ import {DashboardPage} from './pages/DashboardPage'
 import {AuthPage} from './pages/AuthPage'
 import {PoisonsPage} from './pages/PoisonsPage'
 import {CornPage} from './pages/CornPage'
+import {SalePage} from './pages/SalePage'
 
 export const useRoutes = (isAuthenticated: boolean) => {
     if (isAuthenticated) {
@@ -12,6 +13,7 @@ export const useRoutes = (isAuthenticated: boolean) => {
                 <Route exact path={'/'} component={DashboardPage}/>
                 <Route exact path={'/poisons'} component={PoisonsPage}/>
                 <Route exact path={'/add-corn'} component={CornPage}/>
+                <Route exact path={'/add-sale'} component={SalePage}/>
                 <Redirect to='/'/>
             </Switch>
         )
