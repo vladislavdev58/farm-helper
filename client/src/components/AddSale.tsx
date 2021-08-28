@@ -3,7 +3,7 @@ import {useMessage} from '../hooks/message.hook'
 import {useFormik} from 'formik'
 import {AuthContext} from '../context/AuthContext'
 import {useHttp} from '../hooks/http.hook'
-import {runInAction} from 'mobx'
+import {runInAction, toJS} from 'mobx'
 import CornStore from '../store/CornStore'
 import {Loader} from './Loader/Loader'
 import {DatePicker} from './DatePicker'
@@ -11,7 +11,7 @@ import {observer} from 'mobx-react'
 
 
 type TypeForm = {
-    name: string
+    _id: string
     weight: number
     date: Date | null
 }
@@ -20,13 +20,12 @@ export const AddSale = observer(() => {
     const message = useMessage()
     const saleFormik = useFormik<TypeForm>({
         initialValues: {
-            name: '',
+            _id: '',
             weight: 0,
             date: null
         },
         onSubmit: async (values) => {
-            console.log(values)
-            addHandler(values)
+            await addHandler(values)
 
         }
     })
@@ -37,17 +36,20 @@ export const AddSale = observer(() => {
             const data = await request('/api/sale/add', 'POST', {...values}, {
                 Authorization: `Bearer: ${auth.token}`
             })
-            const {corn} = data
+            const {sale} = data
             runInAction(() => {
-                CornStore.allCorn = [...CornStore.allCorn, ...[corn]]
+                console.log(toJS(CornStore.allSale))
+                CornStore.allSale = [...CornStore.allSale, ...[sale]]
+                console.log(toJS(CornStore.allSale))
             })
-            message('Добавлено')
+            message(data.message)
         } catch (e) {
-
+            console.log(e)
+            message(e.message)
         }
     }
-    const select = CornStore.allCorn.map(item =>
-        <option value={item.name} >{item.name}</option>
+    const select = CornStore.allCorn.map(({_id, name, cost, weight}) =>
+        <option value={_id} key={_id}>{`${name}(${cost}₽, ${weight}кг)`}</option>
     )
     const selectRef = useRef<any>()
     useEffect(() => {
@@ -63,7 +65,7 @@ export const AddSale = observer(() => {
                 <div className="col s12">
                     <div className="row">
                         <div className="input-field col s12">
-                            <select ref={selectRef}>
+                            <select ref={selectRef} name='_id' onChange={saleFormik.handleChange}>
                                 <option value="" disabled selected>Выберите зерно</option>
                                 {select}
                             </select>

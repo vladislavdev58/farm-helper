@@ -18,3 +18,13 @@ export type TypeCorn = {
     weight: number
     color: string[]
 }
+
+export type TypeSale = {
+    __v: number
+    _id: string
+    sum: number
+    date: Date
+    name: string
+    owner: string
+    weight: number
+}

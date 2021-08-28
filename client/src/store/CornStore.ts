@@ -1,10 +1,11 @@
 import {makeAutoObservable} from 'mobx'
-import {TypeCorn, TypePoisons} from '../types/types'
+import {TypeCorn, TypePoisons, TypeSale} from '../types/types'
 
 class CornStore {
 
     allCorn:TypeCorn[] | [] = []
     allPoisons: TypePoisons[] | [] = []
+    allSale: TypeSale[] | [] = []
 
 
     constructor() {
