@@ -1,35 +1,11 @@
-import React, {useCallback, useContext, useEffect} from 'react'
+import React from 'react'
 import {Pie} from 'react-chartjs-2/dist'
 import {CardMetric} from './CardMetric/CardMetric'
 import CornStore from '../store/CornStore'
-import {useHttp} from '../hooks/http.hook'
-import {AuthContext} from '../context/AuthContext'
-import {TypeCorn} from '../types/types'
-import {runInAction} from 'mobx'
 import {observer} from 'mobx-react'
-import {Loader} from './Loader/Loader'
 import {Link} from 'react-router-dom'
 
 export const CornStatic = observer(() => {
-
-    const {loading, request} = useHttp()
-    const {token} = useContext(AuthContext)
-    const fetchCorn = useCallback(async () => {
-        try {
-            const fetched: TypeCorn[] = await request('api/corn/getList', 'GET', null, {
-                Authorization: `Bearer ${token}`
-            })
-            runInAction(() => {
-                CornStore.allCorn = fetched
-            })
-        } catch (e) {
-        }
-    }, [token, request])
-
-    useEffect(() => {
-        fetchCorn()
-    }, [fetchCorn])
-
     const data = CornStore.allCorn.length ? {
         labels: CornStore.getAllName(),
         datasets: [
@@ -41,9 +17,6 @@ export const CornStatic = observer(() => {
             },
         ],
     } : {}
-    if (loading) {
-        return <Loader/>
-    }
     return (
         <CardMetric
             text={'Общее количество зерна'}
