@@ -18,7 +18,6 @@ export const SalePage = observer(() => {
             const fetched: TypeSale[] = await request('api/sale/get', 'GET', null, {
                 Authorization: `Bearer ${token}`
             })
-            console.log(fetched)
             runInAction(() => {
                 CornStore.allSale = fetched
             })

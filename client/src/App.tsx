@@ -8,28 +8,18 @@ import {TypeCorn} from "./types/types";
 import {runInAction} from "mobx";
 import CornStore from "./store/CornStore";
 import {useHttp} from "./hooks/http.hook";
+import {useHttpCorn} from "./hooks/request/corn.hook";
 
 const App = () => {
     const {token, login, logout, userId, ready} = useAuth()
     const isAuthenticated = !!token
     const routes = useRoutes(isAuthenticated)
-    //Corn
-    const {loading, request} = useHttp()
-    const fetchCorn = useCallback(async () => {
-        try {
-            const fetched: TypeCorn[] = await request('api/corn/getList', 'GET', null, {
-                Authorization: `Bearer ${token}`
-            })
-            runInAction(() => {
-                CornStore.allCorn = fetched
-            })
-        } catch (e) {
-        }
-    }, [token, request])
-
+    const {fetchCorn} = useHttpCorn()
     useEffect(() => {
-        fetchCorn()
-    }, [fetchCorn])
+        if (ready) {
+            fetchCorn()
+        }
+    }, [ready, fetchCorn])
     //END Corn
     if (!ready) {
         return <Loader/>

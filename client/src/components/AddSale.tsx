@@ -8,6 +8,7 @@ import CornStore from '../store/CornStore'
 import {Loader} from './Loader/Loader'
 import {DatePicker} from './DatePicker'
 import {observer} from 'mobx-react'
+import {useHttpCorn} from "../hooks/request/corn.hook";
 
 
 type TypeForm = {
@@ -17,6 +18,7 @@ type TypeForm = {
 }
 
 export const AddSale = observer(() => {
+    const {fetchCorn, loadingCorn} = useHttpCorn()
     const message = useMessage()
     const saleFormik = useFormik<TypeForm>({
         initialValues: {
@@ -26,7 +28,7 @@ export const AddSale = observer(() => {
         },
         onSubmit: async (values) => {
             await addHandler(values)
-
+            fetchCorn()
         }
     })
     const auth = useContext(AuthContext)
