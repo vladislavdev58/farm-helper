@@ -1,13 +1,9 @@
-import React, {useCallback, useEffect} from 'react'
+import React, {useEffect} from 'react'
 import {BrowserRouter as Router} from 'react-router-dom'
 import {AuthContext} from "./context/AuthContext";
 import {useAuth} from "./hooks/auth.hook.js";
 import {Loader} from './components/Loader/Loader'
 import {useRoutes} from './routes'
-import {TypeCorn} from "./types/types";
-import {runInAction} from "mobx";
-import CornStore from "./store/CornStore";
-import {useHttp} from "./hooks/http.hook";
 import {useHttpCorn} from "./hooks/request/corn.hook";
 
 const App = () => {
