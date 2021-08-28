@@ -7,7 +7,7 @@ type TypeChildren = {
     children: React.ReactNode
 }
 export const MainLayout: FC<TypeChildren> = ({children}) => {
-    const [isShow, setIsShow] = useState<boolean>(true)
+    const [isShow, setIsShow] = useState<boolean>(false)
     const classes = [style.wrapper, isShow ? '' : style.close]
     return (
         <div className={classes.join(' ')}>
