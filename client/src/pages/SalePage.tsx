@@ -2,13 +2,16 @@ import React, {useCallback, useContext, useEffect, useState} from 'react'
 import {MainLayout} from '../layouts/MainLayout/MainLayout'
 import {AddSale} from '../components/AddSale'
 import {SaleTable} from '../components/SaleTable'
-import {useHttp} from "../hooks/http.hook";
-import {AuthContext} from "../context/AuthContext";
-import {TypeSale} from "../types/types";
-import {runInAction} from "mobx";
-import CornStore from "../store/CornStore";
-import {Loader} from "../components/Loader/Loader";
-import {observer} from "mobx-react";
+import {useHttp} from '../hooks/http.hook'
+import {AuthContext} from '../context/AuthContext'
+import {TypeSale} from '../types/types'
+import {runInAction} from 'mobx'
+import CornStore from '../store/CornStore'
+import {Loader} from '../components/Loader/Loader'
+import {observer} from 'mobx-react'
+import {Box, Button, Grid, Typography} from '@material-ui/core'
+import RemoveIcon from '@material-ui/icons/Remove'
+import AddCircleIcon from '@material-ui/icons/AddCircle'
 
 export const SalePage = observer(() => {
     const {loading, request} = useHttp()
@@ -29,10 +32,22 @@ export const SalePage = observer(() => {
         fetchSale()
     }, [fetchSale])
     const [isShowForm, setIsShowForm] = useState<boolean>(false)
-    if (loading) return <Loader/>
+    if (loading) return <MainLayout><Loader/></MainLayout>
     return(
         <MainLayout>
-            <div className="waves-effect waves-light btn" onClick={() => setIsShowForm(!isShowForm)}>Добавить культуру</div>
+            <Box my={5}>
+                <Grid container direction="row" justifyContent="space-between" alignItems="center">
+                    <Typography variant="h2" component="h1">Продажи</Typography>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        startIcon={isShowForm ? <RemoveIcon/> : <AddCircleIcon/>}
+                        onClick={() => setIsShowForm(!isShowForm)}
+                    >
+                        {isShowForm ? 'Закрыть' : 'Добавить продажу'}
+                    </Button>
+                </Grid>
+            </Box>
             {isShowForm && <AddSale/>}
             <SaleTable/>
         </MainLayout>

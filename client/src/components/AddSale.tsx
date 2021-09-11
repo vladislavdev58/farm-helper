@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef} from 'react'
+import React, {useContext, useRef} from 'react'
 import {useMessage} from '../hooks/message.hook'
 import {useFormik} from 'formik'
 import {AuthContext} from '../context/AuthContext'
@@ -6,9 +6,10 @@ import {useHttp} from '../hooks/http.hook'
 import {runInAction, toJS} from 'mobx'
 import CornStore from '../store/CornStore'
 import {Loader} from './Loader/Loader'
-import {DatePicker} from './DatePicker'
 import {observer} from 'mobx-react'
-import {useHttpCorn} from "../hooks/request/corn.hook";
+import {useHttpCorn} from '../hooks/request/corn.hook'
+import CloudUploadIcon from '@material-ui/icons/CloudUpload'
+import {Box, Button, Grid, InputLabel, MenuItem, Select, TextField} from '@material-ui/core'
 
 
 type TypeForm = {
@@ -22,7 +23,7 @@ export const AddSale = observer(() => {
     const message = useMessage()
     const saleFormik = useFormik<TypeForm>({
         initialValues: {
-            _id: '',
+            _id: CornStore.allCorn[0]._id,
             weight: 0,
             date: null
         },
@@ -50,49 +51,52 @@ export const AddSale = observer(() => {
             message(e.message)
         }
     }
-    const select = CornStore.allCorn.map(({_id, name, cost, weight}) =>
-        <option value={_id} key={_id}>{`${name}(${cost}₽, ${weight}кг)`}</option>
-    )
-    const selectRef = useRef<any>()
-    useEffect(() => {
-        (window as any).M.FormSelect.init(selectRef.current)
-        // eslint-disable-next-line
-    }, [selectRef.current])
-    if (loading) {
+    if (loading || loadingCorn) {
         return <Loader/>
     }
     return (
         <form onSubmit={saleFormik.handleSubmit}>
-            <div className="row">
-                <div className="col s12">
-                    <div className="row">
-                        <div className="input-field col s12">
-                            <select ref={selectRef} name='_id' onChange={saleFormik.handleChange}>
-                                <option value="" disabled selected>Выберите зерно</option>
-                                {select}
-                            </select>
-
-                        </div>
-                    </div>
-
-                    <div className="row s12">
-                        <div className="input-field col s6">
-                            <input className='validate' onChange={saleFormik.handleChange} name='weight'
-                                   type="number"/>
-                            <label htmlFor="password">Объем</label>
-                        </div>
-
-                        <div className="input-field col s6">
-                            <DatePicker
-                                formik={saleFormik}
-                            />
-                        </div>
-                    </div>
-                </div>
-                <button type='submit' className="btn waves-effect waves-light">Добавить
-                    <i className="material-icons right">send</i>
-                </button>
-            </div>
+            <Grid container spacing={5}>
+                <Grid item xs={4}>
+                    <InputLabel id="selectLabel">Выберите зерно</InputLabel>
+                    <Select labelId="selectLabel" id="select" defaultValue={CornStore.allCorn[0]._id} name='_id'
+                            onChange={event => saleFormik.setFieldValue('_id', event.target.value)}
+                            fullWidth>
+                        {
+                            CornStore.allCorn.map(({_id, name, cost, weight}) =>
+                                <MenuItem value={_id} key={_id}>{`${name}(${cost}₽, ${weight}кг)`}</MenuItem>
+                            )
+                        }
+                    </Select>
+                </Grid>
+                <Grid item xs={4}>
+                    <TextField label={'Объем'} onChange={saleFormik.handleChange} name='weight' type="number"
+                               fullWidth/>
+                </Grid>
+                <Grid item xs={4}>
+                    <TextField
+                        id="date"
+                        label="Дата продажи"
+                        type="date"
+                        onChange={saleFormik.handleChange}
+                        defaultValue={null}
+                        fullWidth
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
+                </Grid>
+            </Grid>
+            <Box my={3}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<CloudUploadIcon/>}
+                    type="submit"
+                >
+                    Добавить
+                </Button>
+            </Box>
         </form>
     )
 })

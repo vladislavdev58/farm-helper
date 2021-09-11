@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react'
-import {useHttp} from "../hooks/http.hook";
-import {AuthContext} from "../context/AuthContext";
+import {useHttp} from '../hooks/http.hook'
+import {AuthContext} from '../context/AuthContext'
 import {useMessage} from '../hooks/message.hook'
 
 type FormType = {

@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react'
 import {BrowserRouter as Router} from 'react-router-dom'
-import {AuthContext} from "./context/AuthContext";
-import {useAuth} from "./hooks/auth.hook.js";
+import {AuthContext} from './context/AuthContext'
+import {useAuth} from './hooks/auth.hook.js'
 import {Loader} from './components/Loader/Loader'
 import {useRoutes} from './routes'
-import {useHttpCorn} from "./hooks/request/corn.hook";
+import {useHttpCorn} from './hooks/request/corn.hook'
 
 const App = () => {
     const {token, login, logout, userId, ready} = useAuth()

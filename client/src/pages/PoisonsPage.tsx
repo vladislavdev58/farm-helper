@@ -9,6 +9,9 @@ import {TypePoisons} from '../types/types'
 import CornStore from '../store/CornStore'
 import {observer} from 'mobx-react'
 import {runInAction} from 'mobx'
+import {Box, Button, Grid, Typography} from '@material-ui/core'
+import RemoveIcon from '@material-ui/icons/Remove'
+import AddCircleIcon from '@material-ui/icons/AddCircle'
 
 
 export const PoisonsPage = observer(() => {
@@ -33,14 +36,24 @@ export const PoisonsPage = observer(() => {
     const [isShowForm, setIsShowForm] = useState<boolean>(false)
 
     if (loading) {
-        return <Loader/>
+        return <MainLayout><Loader/></MainLayout>
     }
     return (
         <MainLayout>
-            <div className="waves-effect waves-light btn" onClick={() => setIsShowForm(!isShowForm)}>Добавить яд</div>
-            {isShowForm && <AddPoisons
-                fetchPoisons={fetchPoisons}
-            />}
+            <Box my={5}>
+                <Grid container direction="row" justifyContent="space-between" alignItems="center">
+                    <Typography variant="h2" component="h1">Яды</Typography>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        startIcon={isShowForm ? <RemoveIcon/> : <AddCircleIcon/>}
+                        onClick={() => setIsShowForm(!isShowForm)}
+                    >
+                        {isShowForm ? 'Закрыть' : 'Добавить яд'}
+                    </Button>
+                </Grid>
+            </Box>
+            {isShowForm && <AddPoisons/>}
             <PoisonsTable/>
         </MainLayout>
     )

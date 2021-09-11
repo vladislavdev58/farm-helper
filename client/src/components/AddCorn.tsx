@@ -6,6 +6,8 @@ import {Loader} from './Loader/Loader'
 import {useMessage} from '../hooks/message.hook'
 import CornStore from '../store/CornStore'
 import {runInAction} from 'mobx'
+import {Box, Button, Grid, TextField} from '@material-ui/core'
+import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 
 type TypeForm = {
     name: string
@@ -46,34 +48,32 @@ export const AddCorn = () => {
     if (loading) {
         return <Loader/>
     }
-    return(
+    return (
         <form onSubmit={cornFormik.handleSubmit}>
-            <div className="row">
-                <div className="col s12">
-                    <div className="row">
-                        <div className="input-field col s12">
-                            <input className='validate' onChange={cornFormik.handleChange} name='name' type="text"/>
-                            <label htmlFor="password">Название зерна</label>
-                        </div>
-                    </div>
-
-                    <div className="row s12">
-                        <div className="input-field col s6">
-                            <input className='validate' onChange={cornFormik.handleChange} name='weight'
-                                   type="number"/>
-                            <label htmlFor="password">Объем</label>
-                        </div>
-
-                        <div className="input-field col s6">
-                            <input className='validate' onChange={cornFormik.handleChange} name='cost' type="number"/>
-                            <label htmlFor="password">Стоимость</label>
-                        </div>
-                    </div>
-                </div>
-                <button type='submit' className="btn waves-effect waves-light">Добавить
-                    <i className="material-icons right">send</i>
-                </button>
-            </div>
+            <Grid container spacing={5}>
+                <Grid item xs={4}>
+                    <TextField label={'Название зерна'} onChange={cornFormik.handleChange} name='name' type="text"
+                               fullWidth/>
+                </Grid>
+                <Grid item xs={4}>
+                    <TextField label={'Объем'} onChange={cornFormik.handleChange} name='weight' type="number"
+                               fullWidth/>
+                </Grid>
+                <Grid item xs={4}>
+                    <TextField label={'Стоимость'} onChange={cornFormik.handleChange} name='cost' type="number"
+                               fullWidth/>
+                </Grid>
+            </Grid>
+            <Box my={3}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<CloudUploadIcon/>}
+                    type="submit"
+                >
+                    Добавить
+                </Button>
+            </Box>
         </form>
     )
 }

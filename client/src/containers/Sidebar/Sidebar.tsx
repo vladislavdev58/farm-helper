@@ -1,16 +1,26 @@
 import React, {FC} from 'react'
-import style from './Sidebar.module.scss'
-import {Logo} from '../../components/Logo/Logo'
+import {Drawer} from '@material-ui/core'
+import {Header} from './components/Header'
+import {MenuList} from './components/MenuList'
 
 type MyProps = {
-    isShow: boolean
+    openSidebar: boolean
+    setOpenSidebar: (x: boolean) => void
 }
 
-export const Sidebar:FC<MyProps> = ({isShow}) => {
-    const classes = [style.wrapper, isShow ? '' : style.close]
+
+export const Sidebar: FC<MyProps> = ({openSidebar, setOpenSidebar}) => {
+
+    const setState = (state: boolean) => (
+        event: React.KeyboardEvent | React.MouseEvent,
+    ) => {
+        setOpenSidebar(state)
+    }
+
     return (
-        <div className={`${classes.join(' ')} light-blue lighten-5`}>
-            <Logo/>
-        </div>
+        <Drawer open={openSidebar} onClose={setState(false)}>
+            <Header/>
+            <MenuList/>
+        </Drawer>
     )
 }

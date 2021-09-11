@@ -5,8 +5,9 @@ import {useFormik} from 'formik'
 import {Loader} from '../Loader/Loader'
 import {useMessage} from '../../hooks/message.hook'
 import CornStore from '../../store/CornStore'
-import {DatePicker} from '../DatePicker'
 import {runInAction} from 'mobx'
+import {Box, Button, Grid, TextField} from '@material-ui/core'
+import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 
 type TypeForm = {
     name: string
@@ -15,11 +16,7 @@ type TypeForm = {
     date: Date | null
 }
 
-type MyProps = {
-    fetchPoisons: () => void
-}
-
-export const AddPoisons: FC<MyProps> = ({fetchPoisons}) => {
+export const AddPoisons: FC = () => {
     const message = useMessage()
     const poisonsFormik = useFormik<TypeForm>({
         initialValues: {
@@ -54,39 +51,30 @@ export const AddPoisons: FC<MyProps> = ({fetchPoisons}) => {
     }
     return (
         <form onSubmit={poisonsFormik.handleSubmit}>
-            <div className="row">
-                <div className="col s12">
-                    <div className="row">
-                        <div className="input-field col s12">
-                            <input className='validate' onChange={poisonsFormik.handleChange} name='name' type="text"/>
-                            <label htmlFor="password">Название яда</label>
-                        </div>
-                    </div>
-
-                    <div className="row s12">
-                        <div className="input-field col s4">
-                            <input className='validate' onChange={poisonsFormik.handleChange} name='weight'
-                                   type="number"/>
-                            <label htmlFor="password">Объем(кг)</label>
-                        </div>
-
-                        <div className="input-field col s4">
-                            <input className='validate' onChange={poisonsFormik.handleChange} name='cost'
-                                   type="number"/>
-                            <label htmlFor="password">Цена(руб)</label>
-                        </div>
-
-                        <div className="input-field col s4">
-                            <DatePicker
-                                formik={poisonsFormik}
-                            />
-                        </div>
-                    </div>
-                </div>
-                <button type='submit' className="btn waves-effect waves-light">Добавить
-                    <i className="material-icons right">send</i>
-                </button>
-            </div>
+            <Grid container spacing={5}>
+                <Grid item xs={4}>
+                    <TextField label={'Название яда'} onChange={poisonsFormik.handleChange} name='name' type="text"
+                               fullWidth/>
+                </Grid>
+                <Grid item xs={4}>
+                    <TextField label={'Объем(кг)'} onChange={poisonsFormik.handleChange} name='weight' type="number"
+                               fullWidth/>
+                </Grid>
+                <Grid item xs={4}>
+                    <TextField label={'Цена(руб)'} onChange={poisonsFormik.handleChange} name='cost' type="number"
+                               fullWidth/>
+                </Grid>
+            </Grid>
+            <Box my={3}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<CloudUploadIcon/>}
+                    type="submit"
+                >
+                    Добавить
+                </Button>
+            </Box>
         </form>
     )
 }

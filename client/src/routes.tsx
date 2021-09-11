@@ -12,8 +12,8 @@ export const useRoutes = (isAuthenticated: boolean) => {
             <Switch>
                 <Route exact path={'/'} component={DashboardPage}/>
                 <Route exact path={'/poisons'} component={PoisonsPage}/>
-                <Route exact path={'/add-corn'} component={CornPage}/>
-                <Route exact path={'/add-sale'} component={SalePage}/>
+                <Route exact path={'/corn'} component={CornPage}/>
+                <Route exact path={'/sale'} component={SalePage}/>
                 <Redirect to='/'/>
             </Switch>
         )
