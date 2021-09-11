@@ -1,7 +1,7 @@
 import React from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
 import {DashboardPage} from './pages/DashboardPage'
-import {AuthPage} from './pages/AuthPage'
+import {AuthPage} from './pages/AuthPage/AuthPage'
 import {PoisonsPage} from './pages/PoisonsPage'
 import {CornPage} from './pages/CornPage'
 import {SalePage} from './pages/SalePage'
