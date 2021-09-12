@@ -1,4 +1,4 @@
-import React, {useContext, useRef} from 'react'
+import React, {useContext} from 'react'
 import {useMessage} from '../hooks/message.hook'
 import {useFormik} from 'formik'
 import {AuthContext} from '../context/AuthContext'
@@ -7,9 +7,9 @@ import {runInAction, toJS} from 'mobx'
 import CornStore from '../store/CornStore'
 import {Loader} from './Loader/Loader'
 import {observer} from 'mobx-react'
-import {useHttpCorn} from '../hooks/request/corn.hook'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import {Box, Button, Grid, InputLabel, MenuItem, Select, TextField} from '@material-ui/core'
+import {RequestContext} from '../context/RequestContext'
 
 
 type TypeForm = {
@@ -19,7 +19,7 @@ type TypeForm = {
 }
 
 export const AddSale = observer(() => {
-    const {fetchCorn, loadingCorn} = useHttpCorn()
+    const req = useContext(RequestContext)
     const message = useMessage()
     const saleFormik = useFormik<TypeForm>({
         initialValues: {
@@ -29,7 +29,7 @@ export const AddSale = observer(() => {
         },
         onSubmit: async (values) => {
             await addHandler(values)
-            fetchCorn()
+            req.loadingCorn()
         }
     })
     const auth = useContext(AuthContext)
@@ -51,7 +51,7 @@ export const AddSale = observer(() => {
             message(e.message)
         }
     }
-    if (loading || loadingCorn) {
+    if (loading) {
         return <Loader/>
     }
     return (
