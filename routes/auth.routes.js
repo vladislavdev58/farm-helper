@@ -38,7 +38,7 @@ router.post(
             await user.save()
 
             res.status(201).json({message: 'Пользвоатель создан'})
-            console.log('Новая регистрация!!!')
+            console.log(`Новый пользователь - ${email} !!!`)
 
         } catch (e) {
             res.status(500).json({message: 'Что-то пошло не так'})
