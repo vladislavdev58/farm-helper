@@ -1,5 +1,5 @@
 {
-  "port": 80,
+  "port": 3000,
   "jwtSecret": "secretsecretniy",
   "mongoUrl": "mongodb+srv://blaobleo:V4h4rpF8mwcLZaA@cluster0.il6w3.mongodb.net/prodApp?retryWrites=true&w=majority",
   "baseUrl": "http://farm.ru"
