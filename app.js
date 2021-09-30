@@ -30,7 +30,7 @@ start = async () => {
             useUnifiedTopology: true,
             useCreateIndex: true
         })
-        // app.listen(PORT, () => console.log(`Hacking start on port ${PORT}...`))
+        app.listen(PORT, () => console.log(`Hacking start on port ${PORT}...`))
     } catch (e) {
         console.error('Server error', e.message)
         process.exit(1)
