@@ -3,7 +3,7 @@
     {
       "name": "farm-helper",
       "script": "npm",
-      "args" : "dev"
+      "args" : "start"
     }
   ]
 }
