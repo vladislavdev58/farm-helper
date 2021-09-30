@@ -1,0 +1,9 @@
+{
+  "apps": [
+    {
+      "name": "farm-helper",
+      "script": "npm",
+      "args" : "dev"
+    }
+  ]
+}
