@@ -10,6 +10,7 @@ import {observer} from 'mobx-react'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import {Box, Button, Grid, InputLabel, MenuItem, Select, TextField} from '@material-ui/core'
 import {RequestContext} from '../context/RequestContext'
+import {useSnackbar} from 'notistack'
 
 
 type TypeForm = {
@@ -20,7 +21,7 @@ type TypeForm = {
 
 export const AddSale = observer(() => {
     const req = useContext(RequestContext)
-    const message = useMessage()
+    const { enqueueSnackbar } = useSnackbar()
     const saleFormik = useFormik<TypeForm>({
         initialValues: {
             _id: CornStore.allCorn[0]._id,
@@ -45,10 +46,14 @@ export const AddSale = observer(() => {
                 CornStore.allSale = [...CornStore.allSale, ...[sale]]
                 console.log(toJS(CornStore.allSale))
             })
-            message(data.message)
+            enqueueSnackbar(data.message, {
+                variant: 'success',
+            })
         } catch (e) {
             console.log(e)
-            message(e.message)
+            enqueueSnackbar(e.message, {
+                variant: 'error',
+            })
         }
     }
     if (loading) {

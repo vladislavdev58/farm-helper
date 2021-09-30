@@ -31,7 +31,7 @@ router.post(
             const {name, cost, weight} = corn
             if (saleWeight > weight) {
                 return res.status(400).json({
-                    message: `У Вас нет столько на складе.<br>Перепроверьте введенные данные или актуализируйте имеющиеся`
+                    message: 'У Вас нет столько на складе.Перепроверьте введенные данные или актуализируйте имеющиеся'
                 })
             }
             const sum = cost * saleWeight

@@ -8,6 +8,7 @@ import CornStore from '../../store/CornStore'
 import {runInAction} from 'mobx'
 import {Box, Button, Grid, TextField} from '@material-ui/core'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
+import {useSnackbar} from 'notistack'
 
 type TypeForm = {
     name: string
@@ -17,7 +18,7 @@ type TypeForm = {
 }
 
 export const AddPoisons: FC = () => {
-    const message = useMessage()
+    const { enqueueSnackbar } = useSnackbar()
     const poisonsFormik = useFormik<TypeForm>({
         initialValues: {
             name: '',
@@ -41,7 +42,9 @@ export const AddPoisons: FC = () => {
             runInAction(() => {
                 CornStore.allPoisons = [...CornStore.allPoisons, ...[poison]]
             })
-            message('Добавлено')
+            enqueueSnackbar(`${poison.name} добавлен`, {
+                variant: 'success',
+            })
         } catch (e) {
 
         }

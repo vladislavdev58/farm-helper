@@ -8,6 +8,7 @@ import CornStore from '../store/CornStore'
 import {runInAction} from 'mobx'
 import {Box, Button, Grid, TextField} from '@material-ui/core'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
+import {useSnackbar} from 'notistack'
 
 type TypeForm = {
     name: string
@@ -16,7 +17,7 @@ type TypeForm = {
 }
 
 export const AddCorn = () => {
-    const message = useMessage()
+    const { enqueueSnackbar } = useSnackbar()
     const cornFormik = useFormik<TypeForm>({
         initialValues: {
             name: '',
@@ -40,7 +41,9 @@ export const AddCorn = () => {
             runInAction(() => {
                 CornStore.allCorn = [...CornStore.allCorn, ...[corn]]
             })
-            message('Добавлено')
+            enqueueSnackbar(`${corn.name} добавлено`, {
+                variant: 'success',
+            })
         } catch (e) {
 
         }

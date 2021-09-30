@@ -3,6 +3,7 @@ import {useHttp} from '../../hooks/http.hook'
 import {AuthContext} from '../../context/AuthContext'
 import {useMessage} from '../../hooks/message.hook'
 import {Button, Container, Grid, TextField, Typography} from '@material-ui/core'
+import { useSnackbar } from 'notistack'
 import bg from './images/bg.jpg'
 
 type FormType = {
@@ -16,7 +17,7 @@ export const AuthPage = () => {
         password: ''
     })
 
-    const message = useMessage()
+    const { enqueueSnackbar } = useSnackbar()
 
     const changeHandler = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setForm({...form, [event.target.name]: event.target.value})
@@ -26,7 +27,7 @@ export const AuthPage = () => {
     const registerHandler = async () => {
         try {
             const data = await request('/api/auth/register', 'POST', {...form})
-            message(data.message)
+
         } catch (e) {
 
         }
@@ -41,9 +42,11 @@ export const AuthPage = () => {
         }
     }
     useEffect(() => {
-        message(error)
+        if (error) enqueueSnackbar(error, {
+            variant: 'error',
+        })
         clearError()
-    }, [error, message, clearError])
+    }, [error, enqueueSnackbar, clearError])
     const style = {
         bg: {
             backgroundImage: `url(${bg})`,
