@@ -3,7 +3,14 @@
     {
       "name": "farm-helper",
       "script": "npm",
-      "args" : "start"
+      "args" : "start",
+      "watch": ["app.js"],
+      "ignore_watch": ["node_modules"],
+      "watch_options": {
+        "usePolling": true,
+        "alwaysStat": true,
+        "useFsEvents": false
+      }
     }
   ]
 }
