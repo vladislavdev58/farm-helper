@@ -6,33 +6,35 @@ import {useHttp} from '../hooks/http.hook'
 import {runInAction, toJS} from 'mobx'
 import CornStore from '../store/CornStore'
 import {Loader} from './Loader/Loader'
-import {observer} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import {Box, Button, Grid, InputLabel, MenuItem, Select, TextField} from '@material-ui/core'
 import {RequestContext} from '../context/RequestContext'
 import {useSnackbar} from 'notistack'
+import UserStore from '../store/UserStore'
+import StoreContext from '../context/StoreContext'
 
 
 type TypeForm = {
-    _id: string
+    _id: string | undefined
     weight: number
     date: Date | null
 }
 
-export const AddSale = observer(() => {
-    const req = useContext(RequestContext)
+export const AddSale = observer((store:any) => {
+    const stores = useContext(StoreContext)
     const { enqueueSnackbar } = useSnackbar()
     const saleFormik = useFormik<TypeForm>({
         initialValues: {
-            _id: CornStore.allCorn[0]._id,
+            _id: stores?.cornStore.allCorn[0]._id,
             weight: 0,
             date: null
         },
         onSubmit: async (values) => {
             await addHandler(values)
-            req.loadingCorn()
         }
     })
+    console.log(store)
     const auth = useContext(AuthContext)
     const {loading, request} = useHttp()
     const addHandler = async (values: TypeForm) => {
@@ -41,11 +43,11 @@ export const AddSale = observer(() => {
                 Authorization: `Bearer: ${auth.token}`
             })
             const {sale} = data
-            runInAction(() => {
-                console.log(toJS(CornStore.allSale))
-                CornStore.allSale = [...CornStore.allSale, ...[sale]]
-                console.log(toJS(CornStore.allSale))
-            })
+            if (stores?.cornStore) {
+                runInAction(() => {
+                    stores.cornStore.allCorn = [...stores.cornStore.allCorn, ...[sale]]
+                })
+            }
             enqueueSnackbar(data.message, {
                 variant: 'success',
             })
@@ -64,11 +66,11 @@ export const AddSale = observer(() => {
             <Grid container spacing={5}>
                 <Grid item xs={4}>
                     <InputLabel id="selectLabel">Выберите зерно</InputLabel>
-                    <Select labelId="selectLabel" id="select" defaultValue={CornStore.allCorn[0]._id} name='_id'
+                    <Select labelId="selectLabel" id="select" defaultValue={store.cornStore.allCorn[0]._id} name='_id'
                             onChange={event => saleFormik.setFieldValue('_id', event.target.value)}
                             fullWidth>
                         {
-                            CornStore.allCorn.map(({_id, name, cost, weight}) =>
+                            stores?.cornStore.allCorn.map(({_id, name, cost, weight}) =>
                                 <MenuItem value={_id} key={_id}>{`${name}(${cost}₽, ${weight}кг)`}</MenuItem>
                             )
                         }

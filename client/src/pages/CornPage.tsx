@@ -5,7 +5,7 @@ import {CornTable} from '../components/CornTable'
 import {Box, Button, Grid, Typography} from '@material-ui/core'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import RemoveIcon from '@material-ui/icons/Remove'
-import {observer} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 
 export const CornPage = observer(() => {
     const [isShowForm, setIsShowForm] = useState<boolean>(false)

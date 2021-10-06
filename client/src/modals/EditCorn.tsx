@@ -7,6 +7,7 @@ import {useHttp} from '../hooks/http.hook'
 import {Loader} from '../components/Loader/Loader'
 import {runInAction} from 'mobx'
 import CornStore from '../store/CornStore'
+import StoreContext from '../context/StoreContext'
 
 type MyProps = {
     _id: string
@@ -25,6 +26,7 @@ type TypeForm = {
 }
 
 export const EditCorn: FC<MyProps> = ({_id, name, weight, cost, id, index}) => {
+    const stores = useContext(StoreContext)
     const iconEdit = (<i className="material-icons">edit</i>)
 
     const showMessage = useMessage()
@@ -47,9 +49,11 @@ export const EditCorn: FC<MyProps> = ({_id, name, weight, cost, id, index}) => {
                 Authorization: `Bearer: ${auth.token}`
             })
             const {corn, message} = data
-            runInAction(() => {
-                CornStore.allCorn[index] = corn
-            })
+            if (stores?.cornStore) {
+                runInAction(() => {
+                    stores.cornStore.allCorn[index] = corn
+                })
+            }
             showMessage(message)
         } catch (e) {
 

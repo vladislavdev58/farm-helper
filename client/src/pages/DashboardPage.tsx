@@ -1,10 +1,12 @@
 import React, {useContext, useEffect} from 'react'
 import {MainLayout} from '../layouts/MainLayout/MainLayout'
-import {CardMetric} from '../components/CardMetric/CardMetric'
-import {Bar, Line} from 'react-chartjs-2/dist'
-import {observer} from 'mobx-react'
-import {CornStatic} from '../components/CornStatic'
+import {Bar, Pie} from 'react-chartjs-2/dist'
+import {observer} from 'mobx-react-lite'
 import {RequestContext} from '../context/RequestContext'
+import {Card, CardContent, Grid, Typography, Button, ListItem} from '@material-ui/core'
+import CornStore from '../store/CornStore'
+import {Link} from 'react-router-dom'
+import {CornStatic} from '../components/CornStatic'
 
 export const DashboardPage = observer(() => {
     const req = useContext(RequestContext)
@@ -51,49 +53,36 @@ export const DashboardPage = observer(() => {
         },
     }
 
-    const harvesting = {
-        labels: ['Июнь', 'Июль', 'Август'],
-        datasets: [
-            {
-                label: 'ГА',
-                data: [200, 300, 250],
-                fill: false,
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgba(255, 99, 132, 0.2)',
-            },
-        ],
-    }
 
-    const optionsHarvesting = {
-        scales: {
-            yAxes: [
-                {
-                    ticks: {
-                        beginAtZero: true,
-                    },
-                },
-            ],
-        },
-    }
 
     return (
         <MainLayout>
             <h2>Панель приборов</h2>
-            <div className='row'>
-                <CornStatic/>
-                <CardMetric
-                    text={'Продажи по месяцам'}
-                    col={6}
-                >
-                    <Bar
-                        data={allSale}
-                        options={optionsAllSale}
-                    />
-                </CardMetric>
-                <CardMetric text={'Уборка ГА за месяц'} col={3}>
-                    <Line data={harvesting} options={optionsHarvesting}/>
-                </CardMetric>
-            </div>
+            <Grid container spacing={3} justifyContent={'center'}>
+                <Grid item xs={12} sm={6} md={4}>
+                    <CornStatic/>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                    <Card>
+                        <CardContent>
+                            <Bar
+                                data={allSale}
+                                options={optionsAllSale}
+                            />
+                            <Typography variant="h5" component="h2">
+                                Продажи по месяцам
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                </Grid>
+                {/*<Grid item xs={12} sm={6} md={4}>*/}
+                {/*    <Card>*/}
+                {/*        <CardContent>*/}
+                {/*            */}
+                {/*        </CardContent>*/}
+                {/*    </Card>*/}
+                {/*</Grid>*/}
+            </Grid>
         </MainLayout>
     )
 })

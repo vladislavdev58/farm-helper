@@ -4,6 +4,7 @@ import {useHttp} from '../hooks/http.hook'
 import {AuthContext} from '../context/AuthContext'
 import {useMessage} from '../hooks/message.hook'
 import CornStore from '../store/CornStore'
+import StoreContext from '../context/StoreContext'
 
 type MyProps = {
     _id: string
@@ -14,6 +15,7 @@ type MyProps = {
 }
 
 export const CornTableItem: FC<MyProps> = ({_id, name, weight, cost, index}) => {
+    const stores = useContext(StoreContext)
     const showMessage = useMessage()
     const auth = useContext(AuthContext)
     const {loading, request} = useHttp()
@@ -26,7 +28,7 @@ export const CornTableItem: FC<MyProps> = ({_id, name, weight, cost, index}) => 
             const data = await request('/api/corn/delete', 'DELETE', {_id, name}, {
                 Authorization: `Bearer: ${auth.token}`
             })
-            CornStore.allCorn.splice(index, 1);
+            stores?.cornStore.allCorn.splice(index, 1);
             const {message} = data
             showMessage(message)
         } catch (e) {

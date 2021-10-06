@@ -9,6 +9,7 @@ import {runInAction} from 'mobx'
 import {Box, Button, Grid, TextField} from '@material-ui/core'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import {useSnackbar} from 'notistack'
+import StoreContext from '../../context/StoreContext'
 
 type TypeForm = {
     name: string
@@ -18,6 +19,7 @@ type TypeForm = {
 }
 
 export const AddPoisons: FC = () => {
+    const stores = useContext(StoreContext)
     const { enqueueSnackbar } = useSnackbar()
     const poisonsFormik = useFormik<TypeForm>({
         initialValues: {
@@ -39,9 +41,11 @@ export const AddPoisons: FC = () => {
                 Authorization: `Bearer: ${auth.token}`
             })
             const {poison} = data
-            runInAction(() => {
-                CornStore.allPoisons = [...CornStore.allPoisons, ...[poison]]
-            })
+            if (stores?.cornStore) {
+                runInAction(() => {
+                    stores.cornStore.allPoisons = [...stores.cornStore.allPoisons, ...[poison]]
+                })
+            }
             enqueueSnackbar(`${poison.name} добавлен`, {
                 variant: 'success',
             })

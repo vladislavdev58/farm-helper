@@ -1,14 +1,17 @@
 import React, {FC} from 'react'
 import {Header} from '../../containers/Header/Header'
+import {Container} from '@material-ui/core'
 
 export const MainLayout: FC = ({children}) => {
     return (
-        <div>
+        <>
             <Header/>
-            <div className='container'>
-                {children}
-            </div>
-        </div>
+            <Container maxWidth="xl">
+                <>
+                    {children}
+                </>
+            </Container>
+        </>
 
     )
 }

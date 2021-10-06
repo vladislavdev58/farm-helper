@@ -1,13 +1,15 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
 import {DashboardPage} from './pages/DashboardPage'
 import {AuthPage} from './pages/AuthPage/AuthPage'
 import {PoisonsPage} from './pages/PoisonsPage'
 import {CornPage} from './pages/CornPage'
 import {SalePage} from './pages/SalePage'
+import StoreContext from './context/StoreContext'
 
-export const useRoutes = (isAuthenticated: boolean) => {
-    if (isAuthenticated) {
+export const Routes = () => {
+    const stores = useContext(StoreContext)
+    if (!!stores?.userStore.token) {
         return (
             <Switch>
                 <Route exact path={'/'} component={DashboardPage}/>

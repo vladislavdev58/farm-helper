@@ -8,12 +8,14 @@ import {TypeSale} from '../types/types'
 import {runInAction, toJS} from 'mobx'
 import CornStore from '../store/CornStore'
 import {Loader} from '../components/Loader/Loader'
-import {observer} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import {Box, Button, Grid, Typography} from '@material-ui/core'
 import RemoveIcon from '@material-ui/icons/Remove'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
+import StoreContext from '../context/StoreContext'
 
 export const SalePage = observer(() => {
+    const stores = useContext(StoreContext)
     const {loading, request} = useHttp()
     const {token} = useContext(AuthContext)
     const fetchSale = useCallback(async () => {
@@ -21,15 +23,17 @@ export const SalePage = observer(() => {
             const fetched: TypeSale[] = await request('api/sale/get', 'GET', null, {
                 Authorization: `Bearer ${token}`
             })
-            runInAction(() => {
-                CornStore.allSale = fetched
-            })
+            if (stores?.cornStore) {
+                runInAction(() => {
+                    stores.cornStore.allSale = fetched
+                })
+            }
         } catch (e) {
         }
     }, [token, request])
 
     useEffect(() => {
-        fetchSale()
+        fetchSale() 
     }, [fetchSale])
     const [isShowForm, setIsShowForm] = useState<boolean>(false)
     if (loading) return <MainLayout><Loader/></MainLayout>

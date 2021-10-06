@@ -13,4 +13,4 @@ class CornStore {
 
 
 
-export default new CornStore()
+export default CornStore

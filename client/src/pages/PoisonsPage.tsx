@@ -7,24 +7,29 @@ import {AddPoisons} from '../components/AddPoisons/AddPoisons'
 import {PoisonsTable} from '../components/PoisonsTable'
 import {TypePoisons} from '../types/types'
 import CornStore from '../store/CornStore'
-import {observer} from 'mobx-react'
+import {observer} from 'mobx-react-lite'
 import {runInAction} from 'mobx'
 import {Box, Button, Grid, Typography} from '@material-ui/core'
 import RemoveIcon from '@material-ui/icons/Remove'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
+import StoreContext from '../context/StoreContext'
 
 
 export const PoisonsPage = observer(() => {
     const {loading, request} = useHttp()
     const {token} = useContext(AuthContext)
+    const stores = useContext(StoreContext)
     const fetchPoisons = useCallback(async () => {
         try {
             const fetched: TypePoisons[] = await request('api/poisons/getList', 'GET', null, {
                 Authorization: `Bearer ${token}`
             })
-            runInAction(() => {
-                CornStore.allPoisons = fetched
-            })
+            if(stores?.cornStore) {
+
+                runInAction(() => {
+                    stores.cornStore.allPoisons = fetched
+                })
+            }
         } catch (e) {
         }
     }, [token, request])

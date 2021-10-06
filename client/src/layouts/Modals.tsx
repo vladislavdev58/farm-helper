@@ -1,5 +1,6 @@
-import React, {FC, useEffect, useRef} from 'react'
+import React, {FC, useContext, useEffect, useRef} from 'react'
 import CornStore from '../store/CornStore'
+import StoreContext from '../context/StoreContext'
 
 type MyProps = {
     textLink: string | JSX.Element
@@ -9,6 +10,7 @@ type MyProps = {
 }
 
 export const Modals: FC<MyProps> = ({textLink, id, modalTitle, textCloseBtn = 'Закрыть', children}) => {
+    const stores = useContext(StoreContext)
     const modalRef = useRef<any>()
     const btnCloseRef = useRef<any>()
     const options = {
@@ -26,7 +28,7 @@ export const Modals: FC<MyProps> = ({textLink, id, modalTitle, textCloseBtn = '�
         }
         (window as any).M.Modal.init(modalRef.current, options)
         // eslint-disable-next-line
-    }, [CornStore.allCorn])
+    }, [stores?.cornStore.allCorn])
 
     useEffect(() => {
         const btn = btnCloseRef.current

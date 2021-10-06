@@ -6,5 +6,6 @@ type TypeContext = {
     loadingCorn: () => void
 }
 export const RequestContext = createContext({
-    loadingCorn: noop
+    loadingCorn: noop,
+    loading: null
 } as TypeContext)

@@ -5,6 +5,7 @@ import {useMessage} from '../../hooks/message.hook'
 import {Button, Container, Grid, TextField, Typography} from '@material-ui/core'
 import { useSnackbar } from 'notistack'
 import bg from './images/bg.jpg'
+import {login} from '../../api'
 
 type FormType = {
     email: string
@@ -34,12 +35,7 @@ export const AuthPage = () => {
     }
 
     const loginHandler = async () => {
-        try {
-            const data = await request('/api/auth/login', 'POST', {...form})
-            auth.login(data.token, data.userId)
-        } catch (e) {
-
-        }
+        login(form)
     }
     useEffect(() => {
         if (error) enqueueSnackbar(error, {
