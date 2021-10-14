@@ -6,10 +6,19 @@ import MenuIcon from '@material-ui/icons/Menu'
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles'
 import {Sidebar} from '../Sidebar/Sidebar'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import StoreContext from '../../context/StoreContext'
+import {toJS} from 'mobx'
 
 
 export const Header: FC = () => {
-    const auth = useContext(AuthContext)
+    const stores = useContext(StoreContext)
+    const logout = () => {
+        if (stores?.userStore) {
+            stores.userStore.token = null
+            stores.userStore.userId = null
+            localStorage.removeItem('userData')
+        }
+    }
     const useStyles = makeStyles((theme: Theme) =>
         createStyles({
             root: {
@@ -36,7 +45,7 @@ export const Header: FC = () => {
                     <Typography component={Link} to={'/'} variant="h6" className={classes.title}>
                         Компания
                     </Typography>
-                    <Button startIcon={<ExitToAppIcon/>} color="inherit" onClick={() => auth.logout()}>Выйти</Button>
+                    <Button startIcon={<ExitToAppIcon/>} color="inherit" onClick={logout}>Выйти</Button>
                 </Toolbar>
             </AppBar>
             <Sidebar openSidebar={openSidebar} setOpenSidebar={setOpenSidebar}/>

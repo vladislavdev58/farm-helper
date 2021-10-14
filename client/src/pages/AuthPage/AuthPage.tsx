@@ -1,48 +1,48 @@
-import React, {useContext, useEffect, useState} from 'react'
-import {useHttp} from '../../hooks/http.hook'
-import {AuthContext} from '../../context/AuthContext'
-import {useMessage} from '../../hooks/message.hook'
+import React, {useContext, useState} from 'react'
 import {Button, Container, Grid, TextField, Typography} from '@material-ui/core'
-import { useSnackbar } from 'notistack'
+import {useSnackbar} from 'notistack'
 import bg from './images/bg.jpg'
-import {login} from '../../api'
+import {login, register} from '../../api'
+import StoreContext from "../../context/StoreContext";
+import {observer} from "mobx-react-lite";
 
 type FormType = {
     email: string
     password: string
 }
 
-export const AuthPage = () => {
+type StorageType = {
+    userId: string | null
+    token: string | null
+}
+
+export const AuthPage = observer(() => {
+    const stores = useContext(StoreContext)
     const [form, setForm] = useState<FormType>({
         email: '',
         password: ''
     })
 
-    const { enqueueSnackbar } = useSnackbar()
+    const {enqueueSnackbar} = useSnackbar()
 
     const changeHandler = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setForm({...form, [event.target.name]: event.target.value})
     }
-    const auth = useContext(AuthContext)
-    const {loading, request, error, clearError} = useHttp()
     const registerHandler = async () => {
-        try {
-            const data = await request('/api/auth/register', 'POST', {...form})
-
-        } catch (e) {
-
-        }
+        await register(form)
     }
 
     const loginHandler = async () => {
-        login(form)
+        const result = await login(form)
+        const {token, userId} = result
+        localStorage.setItem('userData', JSON.stringify({
+            token, userId
+        } as StorageType))
+        if (stores?.userStore) {
+            stores.userStore.token = token
+            stores.userStore.userId = userId
+        }
     }
-    useEffect(() => {
-        if (error) enqueueSnackbar(error, {
-            variant: 'error',
-        })
-        clearError()
-    }, [error, enqueueSnackbar, clearError])
     const style = {
         bg: {
             backgroundImage: `url(${bg})`,
@@ -96,7 +96,6 @@ export const AuthPage = () => {
                             variant="contained"
                             color="primary"
                             onClick={loginHandler}
-                            disabled={loading}
                         >
                             Войти
                         </Button>
@@ -108,7 +107,6 @@ export const AuthPage = () => {
                             variant="outlined"
                             color="secondary"
                             onClick={registerHandler}
-                            disabled={loading}
                         >
                             Зарегистрироваться
                         </Button>
@@ -117,4 +115,4 @@ export const AuthPage = () => {
             </Container>
         </Grid>
     )
-}
+})

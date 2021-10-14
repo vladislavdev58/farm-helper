@@ -6,8 +6,9 @@ import {PoisonsPage} from './pages/PoisonsPage'
 import {CornPage} from './pages/CornPage'
 import {SalePage} from './pages/SalePage'
 import StoreContext from './context/StoreContext'
+import {observer} from "mobx-react-lite";
 
-export const Routes = () => {
+export const Routes = observer(() => {
     const stores = useContext(StoreContext)
     if (!!stores?.userStore.token) {
         return (
@@ -27,4 +28,4 @@ export const Routes = () => {
             <Redirect to='/login'/>
         </Switch>
     )
-}
+})
