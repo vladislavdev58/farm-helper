@@ -33,7 +33,6 @@ const App = observer(() => {
     return (
         <>
             <Notifier/>
-            <p onClick={() => stores?.userStore.enqueueSnackbar('help')}>add</p>
             <Router>
                 <Routes/>
             </Router>
