@@ -28,3 +28,9 @@ export type TypeSale = {
     owner: string
     weight: number
 }
+
+export type TypeNotification = {
+    key: number
+    message: string
+    options: any
+}

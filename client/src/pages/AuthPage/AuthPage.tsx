@@ -32,7 +32,7 @@ export const AuthPage = observer(() => {
         try {
             await register(form)
         } catch (e) {
-            enqueueSnackbar(e.message)
+            stores?.userStore.enqueueSnackbar(e.message, 'error')
         }
     }
 
