@@ -29,19 +29,28 @@ export const AuthPage = observer(() => {
         setForm({...form, [event.target.name]: event.target.value})
     }
     const registerHandler = async () => {
-        await register(form)
+        try {
+            await register(form)
+        } catch (e) {
+            enqueueSnackbar(e.message)
+        }
     }
 
     const loginHandler = async () => {
-        const result = await login(form)
-        const {token, userId} = result
-        localStorage.setItem('userData', JSON.stringify({
-            token, userId
-        } as StorageType))
-        if (stores?.userStore) {
-            stores.userStore.token = token
-            stores.userStore.userId = userId
+        try {
+            const result = await login(form)
+            const {token, userId} = result
+            localStorage.setItem('userData', JSON.stringify({
+                token, userId
+            } as StorageType))
+            if (stores?.userStore) {
+                stores.userStore.token = token
+                stores.userStore.userId = userId
+            }
+        } catch (e) {
+            enqueueSnackbar(e.message)
         }
+
     }
     const style = {
         bg: {

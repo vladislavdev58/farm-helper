@@ -37,7 +37,7 @@ router.post(
 
             await user.save()
 
-            res.status(201).json({message: 'Пользвоатель создан'})
+            res.status(201).json({message: 'Пользователь создан'})
             console.log(`Новый пользователь - ${email} !!!`)
 
         } catch (e) {
@@ -58,7 +58,7 @@ router.post(
             if (!errors.isEmpty()) {
                 return res.status(400).json({
                     errors: errors.array(),
-                    message: 'Некорректные данные при регистрации'
+                    message: 'Некорректные данные при авторизации'
                 })
             }
 
