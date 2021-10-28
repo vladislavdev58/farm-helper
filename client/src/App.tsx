@@ -30,7 +30,6 @@ const App = observer(() => {
     useEffect(() => {
         checkAuth()
     }, [])
-    console.log(toJS(stores?.userStore.notifications))
     return (
         <>
             <Notifier/>

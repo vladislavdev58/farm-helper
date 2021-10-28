@@ -1,10 +1,9 @@
 import React, {useContext, useState} from 'react'
 import {Button, Container, Grid, TextField, Typography} from '@material-ui/core'
-import {useSnackbar} from 'notistack'
 import bg from './images/bg.jpg'
 import {login, register} from '../../api'
-import StoreContext from "../../context/StoreContext";
-import {observer} from "mobx-react-lite";
+import StoreContext from '../../context/StoreContext'
+import {observer} from 'mobx-react-lite'
 
 type FormType = {
     email: string
@@ -23,14 +22,13 @@ export const AuthPage = observer(() => {
         password: ''
     })
 
-    const {enqueueSnackbar} = useSnackbar()
-
     const changeHandler = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
         setForm({...form, [event.target.name]: event.target.value})
     }
     const registerHandler = async () => {
         try {
-            await register(form)
+            const result = await register(form)
+            stores?.userStore.enqueueSnackbar(result.message, 'success')
         } catch (e) {
             stores?.userStore.enqueueSnackbar(e.message, 'error')
         }
@@ -48,7 +46,7 @@ export const AuthPage = observer(() => {
                 stores.userStore.userId = userId
             }
         } catch (e) {
-            enqueueSnackbar(e.message)
+            stores?.userStore.enqueueSnackbar(e.message, 'error')
         }
 
     }
