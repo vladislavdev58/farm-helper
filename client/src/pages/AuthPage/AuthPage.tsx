@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react'
 import {Button, Container, Grid, TextField, Typography} from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles'
 import bg from './images/bg.jpg'
 import {login, register} from '../../api'
 import StoreContext from '../../context/StoreContext'

@@ -6,7 +6,6 @@ import {AuthContext} from '../context/AuthContext'
 import {useHttp} from '../hooks/http.hook'
 import {Loader} from '../components/Loader/Loader'
 import {runInAction} from 'mobx'
-import CornStore from '../store/CornStore'
 import StoreContext from '../context/StoreContext'
 
 type MyProps = {

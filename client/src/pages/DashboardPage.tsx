@@ -1,11 +1,9 @@
 import React, {useContext, useEffect} from 'react'
 import {MainLayout} from '../layouts/MainLayout/MainLayout'
-import {Bar, Pie} from 'react-chartjs-2/dist'
+import {Bar} from 'react-chartjs-2/dist'
 import {observer} from 'mobx-react-lite'
 import {RequestContext} from '../context/RequestContext'
-import {Card, CardContent, Grid, Typography, Button, ListItem} from '@material-ui/core'
-import CornStore from '../store/CornStore'
-import {Link} from 'react-router-dom'
+import {Card, CardContent, Grid, Typography} from '@material-ui/core'
 import {CornStatic} from '../components/CornStatic'
 
 export const DashboardPage = observer(() => {

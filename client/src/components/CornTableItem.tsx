@@ -3,7 +3,6 @@ import {EditCorn} from '../modals/EditCorn'
 import {useHttp} from '../hooks/http.hook'
 import {AuthContext} from '../context/AuthContext'
 import {useMessage} from '../hooks/message.hook'
-import CornStore from '../store/CornStore'
 import StoreContext from '../context/StoreContext'
 
 type MyProps = {

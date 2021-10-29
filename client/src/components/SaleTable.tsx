@@ -1,5 +1,4 @@
 import React, {useContext} from 'react'
-import CornStore from '../store/CornStore'
 import {observer} from 'mobx-react-lite'
 import {TableCell, TableRow} from '@material-ui/core'
 import {MyTable} from './Table/MyTable'

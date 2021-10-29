@@ -2,9 +2,8 @@ import React, {useContext, useEffect} from 'react'
 import StoreContext from '../context/StoreContext'
 import {useSnackbar} from 'notistack'
 import {observer} from 'mobx-react-lite'
-import {autorun, toJS} from 'mobx'
+import {autorun} from 'mobx'
 import {TypeNotification} from '../types/types'
-import {AlarmOff} from '@material-ui/icons'
 
 export const Notifier = observer(() => {
     const stores = useContext(StoreContext)

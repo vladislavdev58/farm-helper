@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useRef} from 'react'
 import {Button, Card, CardContent, Typography} from '@material-ui/core'
-import CornStore from '../store/CornStore'
 import {Pie} from 'react-chartjs-2/dist'
 import {Link} from 'react-router-dom'
 import {observer} from 'mobx-react-lite'

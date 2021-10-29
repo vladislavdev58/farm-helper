@@ -1,5 +1,4 @@
 import React, {FC, useContext, useEffect, useRef} from 'react'
-import CornStore from '../store/CornStore'
 import StoreContext from '../context/StoreContext'
 
 type MyProps = {

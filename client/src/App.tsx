@@ -4,7 +4,6 @@ import {observer} from 'mobx-react-lite'
 import {Routes} from './Routes'
 import StoreContext from './context/StoreContext'
 import {Notifier} from './components/Notifier'
-import {toJS} from 'mobx'
 
 type localStorageType = {
     token: string
