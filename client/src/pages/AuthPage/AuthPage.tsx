@@ -1,5 +1,6 @@
 import React, {useContext, useState} from 'react'
 import {Button, Container, Grid, TextField, Typography} from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles';
 import bg from './images/bg.jpg'
 import {login, register} from '../../api'
 import StoreContext from '../../context/StoreContext'
@@ -15,8 +16,20 @@ type StorageType = {
     token: string | null
 }
 
+
+const useStyles = makeStyles({
+    grid: {
+        backgroundImage: `url(${bg})`,
+        height: '100vh',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+    },
+});
+
 export const AuthPage = observer(() => {
     const stores = useContext(StoreContext)
+    const classes = useStyles();
     const [form, setForm] = useState<FormType>({
         email: '',
         password: ''
@@ -66,7 +79,7 @@ export const AuthPage = observer(() => {
         }
     }
     return (
-        <Grid style={style.bg} container alignItems="center">
+        <Grid className={classes.grid} container alignItems="center">
             <Container maxWidth="xs" style={style.form}>
                 <Typography component="h1" variant="h5">
                     Добро пожаловать 👋
