@@ -26,3 +26,5 @@ const post = async (url: string, data: any) => {
 export const login = async (form: loginType) => await post('/api/auth/login', form)
 
 export const register = async (form: loginType) => await post('/api/auth/register', form)
+
+export const loadingCorn = async () => await get

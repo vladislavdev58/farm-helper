@@ -3,12 +3,12 @@ import {Button, Card, CardContent, Typography} from '@material-ui/core'
 import {Pie} from 'react-chartjs-2/dist'
 import {Link} from 'react-router-dom'
 import {observer} from 'mobx-react-lite'
-import {useHttp} from '../hooks/http.hook'
-import {TypeCorn} from '../types/types'
+import {useHttp} from '../../../hooks/http.hook'
+import {TypeCorn} from '../../../types/types'
 import {runInAction} from 'mobx'
-import {AuthContext} from '../context/AuthContext'
-import {Loader} from './Loader/Loader'
-import StoreContext from '../context/StoreContext'
+import {AuthContext} from '../../../context/AuthContext'
+import {Loader} from '../../../components/Loader'
+import StoreContext from '../../../context/StoreContext'
 
 export const CornStatic = observer(() => {
     const stores = useContext(StoreContext)

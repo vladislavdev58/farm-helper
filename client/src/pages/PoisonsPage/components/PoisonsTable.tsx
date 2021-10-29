@@ -2,8 +2,8 @@ import React, {useContext} from 'react'
 import {observer} from 'mobx-react-lite'
 import {runInAction} from 'mobx'
 import {TableCell, TableRow} from '@material-ui/core'
-import {MyTable} from './Table/MyTable'
-import StoreContext from '../context/StoreContext'
+import {MyTable} from '../../../components/Table/MyTable'
+import StoreContext from '../../../context/StoreContext'
 
 
 export const PoisonsTable = observer(() => {

@@ -4,7 +4,7 @@ import {useMessage} from '../hooks/message.hook'
 import {useFormik} from 'formik'
 import {AuthContext} from '../context/AuthContext'
 import {useHttp} from '../hooks/http.hook'
-import {Loader} from '../components/Loader/Loader'
+import {Loader} from '../components/Loader'
 import {runInAction} from 'mobx'
 import StoreContext from '../context/StoreContext'
 

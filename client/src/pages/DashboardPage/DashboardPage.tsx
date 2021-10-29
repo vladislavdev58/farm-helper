@@ -1,13 +1,12 @@
 import React, {useContext, useEffect} from 'react'
-import {MainLayout} from '../layouts/MainLayout/MainLayout'
+import {MainLayout} from '../../layouts/MainLayout/MainLayout'
 import {Bar} from 'react-chartjs-2/dist'
 import {observer} from 'mobx-react-lite'
-import {RequestContext} from '../context/RequestContext'
+import {RequestContext} from '../../context/RequestContext'
 import {Card, CardContent, Grid, Typography} from '@material-ui/core'
-import {CornStatic} from '../components/CornStatic'
+import {CornStatic} from './components/CornStatic'
 
 export const DashboardPage = observer(() => {
-    const req = useContext(RequestContext)
     useEffect(() => {
         req.loadingCorn()
     }, [])

@@ -1,17 +1,17 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react'
-import {MainLayout} from '../layouts/MainLayout/MainLayout'
-import {AddSale} from '../components/AddSale'
-import {SaleTable} from '../components/SaleTable'
-import {useHttp} from '../hooks/http.hook'
-import {AuthContext} from '../context/AuthContext'
-import {TypeSale} from '../types/types'
+import {MainLayout} from '../../layouts/MainLayout/MainLayout'
+import {AddSale} from './components/AddSale'
+import {SaleTable} from './components/SaleTable'
+import {useHttp} from '../../hooks/http.hook'
+import {AuthContext} from '../../context/AuthContext'
+import {TypeSale} from '../../types/types'
 import {runInAction} from 'mobx'
-import {Loader} from '../components/Loader/Loader'
+import {Loader} from '../../components/Loader'
 import {observer} from 'mobx-react-lite'
 import {Box, Button, Grid, Typography} from '@material-ui/core'
 import RemoveIcon from '@material-ui/icons/Remove'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
-import StoreContext from '../context/StoreContext'
+import StoreContext from '../../context/StoreContext'
 
 export const SalePage = observer(() => {
     const stores = useContext(StoreContext)
@@ -32,7 +32,7 @@ export const SalePage = observer(() => {
     }, [token, request])
 
     useEffect(() => {
-        fetchSale() 
+        fetchSale()
     }, [fetchSale])
     const [isShowForm, setIsShowForm] = useState<boolean>(false)
     if (loading) return <MainLayout><Loader/></MainLayout>

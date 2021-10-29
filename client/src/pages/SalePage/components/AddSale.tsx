@@ -1,14 +1,14 @@
 import React, {useContext} from 'react'
 import {useFormik} from 'formik'
-import {AuthContext} from '../context/AuthContext'
-import {useHttp} from '../hooks/http.hook'
+import {AuthContext} from '../../../context/AuthContext'
+import {useHttp} from '../../../hooks/http.hook'
 import {runInAction} from 'mobx'
-import {Loader} from './Loader/Loader'
+import {Loader} from '../../../components/Loader'
 import {observer} from 'mobx-react-lite'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import {Box, Button, Grid, InputLabel, MenuItem, Select, TextField} from '@material-ui/core'
 import {useSnackbar} from 'notistack'
-import StoreContext from '../context/StoreContext'
+import StoreContext from '../../../context/StoreContext'
 
 
 type TypeForm = {

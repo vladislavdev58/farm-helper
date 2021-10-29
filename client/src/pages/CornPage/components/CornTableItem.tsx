@@ -1,9 +1,9 @@
 import React, {FC, useContext} from 'react'
-import {EditCorn} from '../modals/EditCorn'
-import {useHttp} from '../hooks/http.hook'
-import {AuthContext} from '../context/AuthContext'
-import {useMessage} from '../hooks/message.hook'
-import StoreContext from '../context/StoreContext'
+import {EditCorn} from '../../../modals/EditCorn'
+import {useHttp} from '../../../hooks/http.hook'
+import {AuthContext} from '../../../context/AuthContext'
+import {useMessage} from '../../../hooks/message.hook'
+import StoreContext from '../../../context/StoreContext'
 
 type MyProps = {
     _id: string
