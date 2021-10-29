@@ -19,7 +19,7 @@ router.post('/addCorn', auth, async (req, res) => {
     }
 })
 
-router.get('/getList', auth, async (req, res) => {
+router.get('/corn', auth, async (req, res) => {
     try {
         const corn = await Corn.find({owner: req.user.userId})
         res.json(corn)

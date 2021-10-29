@@ -15,20 +15,20 @@ export const CornStatic = observer(() => {
     const startLoading = useRef(false)
     const auth = useContext(AuthContext)
     const {loading, request, error, clearError} = useHttp()
-    const loadingCorn = async () => {
-        startLoading.current = true
-        try {
-            const fetched: TypeCorn[] = await request('api/corn/getList', 'GET', null, {
-                Authorization: `Bearer ${auth.token}`
-            })
-            if (stores?.cornStore) {
-                runInAction(() => {
-                    stores.cornStore.allCorn = fetched
-                })
-            }
-        } catch (e) {
-        }
-    }
+    // const loadingCorn = async () => {
+    //     startLoading.current = true
+    //     try {
+    //         const fetched: TypeCorn[] = await request('api/corn/getList', 'GET', null, {
+    //             Authorization: `Bearer ${auth.token}`
+    //         })
+    //         if (stores?.cornStore) {
+    //             runInAction(() => {
+    //                 stores.cornStore.allCorn = fetched
+    //             })
+    //         }
+    //     } catch (e) {
+    //     }
+    // }
 
     const getDatacorn = () => {
         const obj = {
@@ -45,9 +45,9 @@ export const CornStatic = observer(() => {
         return obj
     }
 
-    useEffect(() => {
-        loadingCorn()
-    }, [])
+    // useEffect(() => {
+    //     loadingCorn()
+    // }, [])
     if (loading) {
         return (
             <Card>

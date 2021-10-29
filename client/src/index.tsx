@@ -7,7 +7,6 @@ import {SnackbarProvider} from 'notistack'
 import StoreContext from './context/StoreContext'
 import RootStore from './store/RootStore'
 
-
 const rootStore = new RootStore()
 ReactDOM.render(
     // <React.StrictMode>
