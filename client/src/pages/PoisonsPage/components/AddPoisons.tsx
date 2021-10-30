@@ -46,11 +46,11 @@ export const AddPoisons: FC = () => {
                     <TextField label={'Объем(кг)'} onChange={poisonsFormik.handleChange} name='weight' type="number"
                                fullWidth/>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={2}>
                     <TextField label={'Цена(руб)'} onChange={poisonsFormik.handleChange} name='cost' type="number"
                                fullWidth/>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={2}>
                     <TextField
                         id="date"
                         label="Дата продажи"
