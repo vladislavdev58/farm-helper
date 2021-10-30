@@ -12,7 +12,7 @@ import {Box, Button, Grid, Typography} from '@material-ui/core'
 import RemoveIcon from '@material-ui/icons/Remove'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import StoreContext from '../../context/StoreContext'
-import {loadingSale} from '../../api'
+import {loadSale} from '../../api'
 
 export const SalePage = observer(() => {
     const stores = useContext(StoreContext)
@@ -22,7 +22,7 @@ export const SalePage = observer(() => {
         (
             async () => {
                 setLoading(true)
-                const result:TypeSale[] = await loadingSale()
+                const result:TypeSale[] = await loadSale()
                 if (stores?.cornStore) {
                     runInAction(() => {
                         stores.cornStore.allSale = result

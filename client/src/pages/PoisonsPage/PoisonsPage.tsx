@@ -12,7 +12,7 @@ import {Box, Button, Grid, Typography} from '@material-ui/core'
 import RemoveIcon from '@material-ui/icons/Remove'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import StoreContext from '../../context/StoreContext'
-import {loadingPoisons} from '../../api'
+import {loadPoisons} from '../../api'
 
 
 export const PoisonsPage = observer(() => {
@@ -23,7 +23,7 @@ export const PoisonsPage = observer(() => {
             async () => {
                 setLoading(true)
                 try {
-                    const result:TypePoisons[] = await loadingPoisons()
+                    const result:TypePoisons[] = await loadPoisons()
                     if(stores?.cornStore) {
                         runInAction(() => {
                             stores.cornStore.allPoisons = result

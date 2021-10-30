@@ -43,14 +43,14 @@ export const login = (form: loginType) => request('POST', '/api/auth/login', for
 
 export const register = (form: loginType) => request('POST', '/api/auth/register', form)
 
-export const loadingCorn = () => request('GET', '/api/tables/corn')
+export const loadCorn = () => request('GET', '/api/tables/corn')
 
 export const addCorn = (form:any) => request('PUT', '/api/tables/corn', form)
 
-export const loadingPoisons = () => request('GET', '/api/tables/corn')
+export const loadPoisons = () => request('GET', '/api/tables/corn')
 
 export const addPoisons = (form: any) => request('PUT', '/api/tables/poisons', form)
 
-export const loadingSale = () => request('GET', '/api/tables/sale')
+export const loadSale = () => request('GET', '/api/tables/sale')
 
 export const addSale = (form: any) => request('PUT', '/api/tables/sale', form)

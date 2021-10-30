@@ -5,7 +5,7 @@ import {observer} from 'mobx-react-lite'
 import {RequestContext} from '../../context/RequestContext'
 import {Card, CardContent, Grid, Typography} from '@material-ui/core'
 import {CornStatic} from './components/CornStatic'
-import {loadingCorn} from '../../api'
+import {loadCorn} from '../../api'
 import StoreContext from '../../context/StoreContext'
 import {runInAction} from 'mobx'
 
@@ -14,7 +14,7 @@ export const DashboardPage = observer(() => {
     useEffect(() => {
         (async () => {
             try {
-                const result = await loadingCorn()
+                const result = await loadCorn()
                 if (stores?.cornStore) {
                     runInAction(() => {
                         stores.cornStore.allCorn = result
