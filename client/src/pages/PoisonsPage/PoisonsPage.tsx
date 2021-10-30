@@ -12,35 +12,38 @@ import {Box, Button, Grid, Typography} from '@material-ui/core'
 import RemoveIcon from '@material-ui/icons/Remove'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import StoreContext from '../../context/StoreContext'
+import {loadingPoisons} from '../../api'
 
 
 export const PoisonsPage = observer(() => {
-    const {loading, request} = useHttp()
-    const {token} = useContext(AuthContext)
     const stores = useContext(StoreContext)
-    const fetchPoisons = useCallback(async () => {
-        try {
-            const fetched: TypePoisons[] = await request('api/poisons/getList', 'GET', null, {
-                Authorization: `Bearer ${token}`
-            })
-            if(stores?.cornStore) {
-
-                runInAction(() => {
-                    stores.cornStore.allPoisons = fetched
-                })
-            }
-        } catch (e) {
-        }
-    }, [token, request])
-
+    const [loading, setLoading] = useState(false)
     useEffect(() => {
-        fetchPoisons()
-    }, [fetchPoisons])
+        (
+            async () => {
+                setLoading(true)
+                try {
+                    const result:TypePoisons[] = await loadingPoisons()
+                    if(stores?.cornStore) {
+                        runInAction(() => {
+                            stores.cornStore.allPoisons = result
+                        })
+                    }
+                } catch (e) {
+                    console.log(e.message)
+                }
+                setLoading(false)
+            }
+        )()
+    }, [])
 
     const [isShowForm, setIsShowForm] = useState<boolean>(false)
-
     if (loading) {
-        return <MainLayout><Loader/></MainLayout>
+        return (
+            <MainLayout>
+                <Loader/>
+            </MainLayout>
+        )
     }
     return (
         <MainLayout>

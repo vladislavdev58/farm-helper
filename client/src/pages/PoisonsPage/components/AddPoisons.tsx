@@ -1,4 +1,4 @@
-import React, {FC, useContext} from 'react'
+import React, {FC, useContext, useState} from 'react'
 import {useHttp} from '../../../hooks/http.hook'
 import {AuthContext} from '../../../context/AuthContext'
 import {useFormik} from 'formik'
@@ -8,6 +8,7 @@ import {Box, Button, Grid, TextField} from '@material-ui/core'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import {useSnackbar} from 'notistack'
 import StoreContext from '../../../context/StoreContext'
+import {addPoisons} from '../../../api'
 
 type TypeForm = {
     name: string
@@ -18,7 +19,7 @@ type TypeForm = {
 
 export const AddPoisons: FC = () => {
     const stores = useContext(StoreContext)
-    const { enqueueSnackbar } = useSnackbar()
+    const [loading, setLoading] = useState(false)
     const poisonsFormik = useFormik<TypeForm>({
         initialValues: {
             name: '',
@@ -27,33 +28,23 @@ export const AddPoisons: FC = () => {
             date: null
         },
         onSubmit: async (values) => {
-            await addHandler(values)
-            poisonsFormik.resetForm()
+            setLoading(true)
+            try {
+                const result = await addPoisons(values)
+                const {poison} = result
+                if (stores?.cornStore) {
+                    runInAction(() => {
+                        stores.cornStore.allPoisons = [...stores.cornStore.allPoisons, ...[poison]]
+                    })
+                    stores.userStore.enqueueSnackbar(`${poison.name} добавлен`, 'success')
+                    poisonsFormik.resetForm()
+                }
+            } catch (e) {
+                console.log(e.message)
+            }
+            setLoading(false)
         }
     })
-    const auth = useContext(AuthContext)
-    const {loading, request} = useHttp()
-    const addHandler = async (values: TypeForm) => {
-        try {
-            const data = await request('/api/poisons/add', 'POST', {...values}, {
-                Authorization: `Bearer: ${auth.token}`
-            })
-            const {poison} = data
-            if (stores?.cornStore) {
-                runInAction(() => {
-                    stores.cornStore.allPoisons = [...stores.cornStore.allPoisons, ...[poison]]
-                })
-            }
-            enqueueSnackbar(`${poison.name} добавлен`, {
-                variant: 'success',
-            })
-        } catch (e) {
-
-        }
-    }
-    if (loading) {
-        return <Loader/>
-    }
     return (
         <form onSubmit={poisonsFormik.handleSubmit}>
             <Grid container spacing={5}>
@@ -76,6 +67,7 @@ export const AddPoisons: FC = () => {
                     color="primary"
                     startIcon={<CloudUploadIcon/>}
                     type="submit"
+                    disabled={loading}
                 >
                     Добавить
                 </Button>

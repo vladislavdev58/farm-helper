@@ -8,9 +8,7 @@ const app = express()
 app.use(express.json({extended: true}))
 
 app.use('/api/auth', require('./routes/auth.routes'))
-app.use('/api/poisons', require('./routes/poisons.routes'))
-app.use('/api/tables', require('./routes/corn.routes'))
-app.use('/api/sale', require('./routes/sale.routes'))
+app.use('/api/tables', require('./routes/corn.routes'), require('./routes/poisons.routes'), require('./routes/sale.routes'))
 
 if (process.env.NODE_ENV === 'production') {
     app.use('/', express.static(path.join(__dirname, 'client', 'build')))

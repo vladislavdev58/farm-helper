@@ -4,7 +4,7 @@ const router = Router()
 const auth = require('../moddleware/auth.moddleware')
 const config = require('config')
 
-router.post('/add', auth, async (req, res) => {
+router.put('/poisons', auth, async (req, res) => {
     try {
         const {name, weight, cost, date} = req.body
         const sum = cost * weight
@@ -19,7 +19,7 @@ router.post('/add', auth, async (req, res) => {
     }
 })
 
-router.get('/getList', auth, async (req, res) => {
+router.get('/poisons', auth, async (req, res) => {
     try {
         const poisons = await Poisons.find({owner: req.user.userId})
         res.json(poisons)

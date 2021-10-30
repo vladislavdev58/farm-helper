@@ -1,13 +1,11 @@
 import React, {useContext} from 'react'
 import {useFormik} from 'formik'
-import {AuthContext} from '../../../context/AuthContext'
-import {useHttp} from '../../../hooks/http.hook'
-import {Loader} from '../../../components/Loader'
 import {runInAction} from 'mobx'
 import {Box, Button, Grid, TextField} from '@material-ui/core'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import {useSnackbar} from 'notistack'
 import StoreContext from '../../../context/StoreContext'
+import {addCorn} from '../../../api'
 
 type TypeForm = {
     name: string
@@ -17,7 +15,6 @@ type TypeForm = {
 
 export const AddCorn = () => {
     const stores = useContext(StoreContext)
-    const { enqueueSnackbar } = useSnackbar()
     const cornFormik = useFormik<TypeForm>({
         initialValues: {
             name: '',
@@ -25,34 +22,21 @@ export const AddCorn = () => {
             cost: 0
         },
         onSubmit: async (values) => {
-            console.log(values)
-            addHandler(values)
-
+            try {
+                const result = await addCorn(values)
+                const {corn} = result
+                console.log(result)
+                if (stores?.cornStore) {
+                    runInAction(() => {
+                        stores.cornStore.allCorn = [...stores?.cornStore.allCorn, ...[corn]]
+                    })
+                    stores.userStore.enqueueSnackbar(`${corn.name} - добавлено`, 'success')
+                }
+            } catch (e) {
+                stores?.userStore.enqueueSnackbar(e.message, 'error')
+            }
         }
     })
-    const auth = useContext(AuthContext)
-    const {loading, request} = useHttp()
-    const addHandler = async (values: TypeForm) => {
-        try {
-            const data = await request('/api/corn/addCorn', 'POST', {...values}, {
-                Authorization: `Bearer: ${auth.token}`
-            })
-            const {corn} = data
-            if (stores?.cornStore) {
-                runInAction(() => {
-                    stores.cornStore.allCorn = [...stores?.cornStore.allCorn, ...[corn]]
-                })
-            }
-            enqueueSnackbar(`${corn.name} добавлено`, {
-                variant: 'success',
-            })
-        } catch (e) {
-
-        }
-    }
-    if (loading) {
-        return <Loader/>
-    }
     return (
         <form onSubmit={cornFormik.handleSubmit}>
             <Grid container spacing={5}>
