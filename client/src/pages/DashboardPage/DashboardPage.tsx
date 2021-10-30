@@ -1,20 +1,25 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {MainLayout} from '../../layouts/MainLayout/MainLayout'
 import {Bar} from 'react-chartjs-2/dist'
 import {observer} from 'mobx-react-lite'
 import {Card, CardContent, Grid, Typography} from '@material-ui/core'
 import {CornStatic} from './components/CornStatic'
-import {loadCorn} from '../../api'
+import {loadCorn, loadSale} from '../../api'
 import StoreContext from '../../context/StoreContext'
 import {runInAction} from 'mobx'
 import {TypeCornData} from '../../types/corn'
+import {TypeSaleData} from '../../types/sale'
+import {Loader} from '../../components/Loader'
 
 export const DashboardPage = observer(() => {
     const stores = useContext(StoreContext)
+    const [loadingCorn, setLoadingCorn] = useState(true)
+    const [loadingSale, setLoadingSale] = useState(true)
     useEffect(() => {
         (async () => {
+            setLoadingCorn(true)
             try {
-                const result:TypeCornData[] = await loadCorn()
+                const result: TypeCornData[] = await loadCorn()
                 if (stores?.cornStore) {
                     runInAction(() => {
                         stores.cornStore.allCorn = result
@@ -23,29 +28,25 @@ export const DashboardPage = observer(() => {
             } catch (e) {
                 console.log(e.message)
             }
+            setLoadingCorn(false)
         })()
     }, [stores?.cornStore])
 
-    const allSale = {
-        labels: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
-        datasets: [
-            {
-                label: 'Рожь',
-                data: [5, 19, 3, 5, 2, 3, 5, 9, 4, 6, 7, 15],
-                backgroundColor: 'rgba(255, 99, 132, 1)',
-            },
-            {
-                label: 'Пшеница',
-                data: [8, 15, 7, 5, 2, 5, 7, 9, 4, 6, 6, 10],
-                backgroundColor: 'rgba(54, 162, 235, 1)',
-            },
-            {
-                label: 'Ячмень',
-                data: [4, 11, 3, 5, 2, 4, 6, 9, 4, 7, 7, 11],
-                backgroundColor: 'rgba(255, 206, 86, 1)',
-            },
-        ],
-    }
+    useEffect(() => {
+        (
+            async () => {
+                setLoadingSale(true)
+                const result: TypeSaleData[] = await loadSale()
+                console.log(result)
+                if (stores?.cornStore) {
+                    runInAction(() => {
+                        stores.cornStore.allSale = result
+                    })
+                }
+                setLoadingSale(false)
+            }
+        )()
+    }, [stores?.cornStore])
 
     const optionsAllSale = {
         scales: {
@@ -65,6 +66,7 @@ export const DashboardPage = observer(() => {
         },
     }
 
+    if (loadingSale && loadingCorn) return <MainLayout><Loader/></MainLayout>
 
     return (
         <MainLayout>
@@ -73,11 +75,11 @@ export const DashboardPage = observer(() => {
                 <Grid item xs={12} sm={6} md={4}>
                     <CornStatic/>
                 </Grid>
-                <Grid item xs={12} sm={6} md={4}>
+                <Grid item xs={12} sm={6} md={6}>
                     <Card>
                         <CardContent>
                             <Bar
-                                data={allSale}
+                                data={stores?.cornStore.getInfoSalesBar()}
                                 options={optionsAllSale}
                             />
                             <Typography variant="h5" component="h2">

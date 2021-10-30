@@ -10,28 +10,10 @@ import RemoveIcon from '@material-ui/icons/Remove'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import StoreContext from '../../context/StoreContext'
 import {loadSale} from '../../api'
-import {TypeSaleData} from '../../types/sale'
 
 export const SalePage = observer(() => {
     const stores = useContext(StoreContext)
-    const [loading, setLoading] = useState(false)
     const [isShowForm, setIsShowForm] = useState(false)
-    useEffect(() => {
-        (
-            async () => {
-                setLoading(true)
-                const result:TypeSaleData[] = await loadSale()
-                if (stores?.cornStore) {
-                    runInAction(() => {
-                        stores.cornStore.allSale = result
-                    })
-                }
-                setLoading(false)
-            }
-        )()
-    }, [stores?.cornStore])
-
-    if (loading) return <MainLayout><Loader/></MainLayout>
 
     return(
         <MainLayout>
