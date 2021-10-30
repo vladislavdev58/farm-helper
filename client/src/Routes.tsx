@@ -7,6 +7,7 @@ import {CornPage} from './pages/CornPage/CornPage'
 import {SalePage} from './pages/SalePage/SalePage'
 import StoreContext from './context/StoreContext'
 import {observer} from 'mobx-react-lite'
+import {UpdatesPage} from './pages/UpdatesPage/UpdatesPage'
 
 export const Routes = observer(() => {
     const stores = useContext(StoreContext)
@@ -17,6 +18,7 @@ export const Routes = observer(() => {
                 <Route exact path={'/poisons'} component={PoisonsPage}/>
                 <Route exact path={'/corn'} component={CornPage}/>
                 <Route exact path={'/sale'} component={SalePage}/>
+                <Route exact path={'/updates'} component={UpdatesPage}/>
                 <Redirect to='/'/>
             </Switch>
         )
