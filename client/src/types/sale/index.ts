@@ -10,6 +10,6 @@ export type TypeSaleData = {
 
 export type TypeSaleForm = {
     _id: string | undefined
-    weight: number
+    weight: string
     date: Date | null
 }

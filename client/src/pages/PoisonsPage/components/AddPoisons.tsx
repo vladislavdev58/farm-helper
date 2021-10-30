@@ -13,8 +13,8 @@ export const AddPoisons: FC = () => {
     const poisonsFormik = useFormik<TypePoisonsForm>({
         initialValues: {
             name: '',
-            weight: 0,
-            cost: 0,
+            weight: '',
+            cost: '',
             date: null
         },
         onSubmit: async (values) => {
@@ -43,11 +43,11 @@ export const AddPoisons: FC = () => {
                                fullWidth/>
                 </Grid>
                 <Grid item xs={4}>
-                    <TextField label={'Объем(кг)'} onChange={poisonsFormik.handleChange} name='weight' type="number"
+                    <TextField label={'Объем(кг)'} onChange={poisonsFormik.handleChange} name='weight' type="text"
                                fullWidth/>
                 </Grid>
                 <Grid item xs={2}>
-                    <TextField label={'Цена(руб)'} onChange={poisonsFormik.handleChange} name='cost' type="number"
+                    <TextField label={'Цена(руб/кг)'} onChange={poisonsFormik.handleChange} name='cost' type="text"
                                fullWidth/>
                 </Grid>
                 <Grid item xs={2}>

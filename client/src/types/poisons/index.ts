@@ -11,7 +11,7 @@ export type TypePoisonsData = {
 
 export type TypePoisonsForm = {
     name: string
-    weight: number
-    cost: number
+    weight: string
+    cost: string
     date: Date | null
 }

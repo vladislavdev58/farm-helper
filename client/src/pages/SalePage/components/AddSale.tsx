@@ -15,7 +15,7 @@ export const AddSale = observer(() => {
     const saleFormik = useFormik<TypeSaleForm>({
         initialValues: {
             _id: stores?.cornStore.allCorn[0]._id,
-            weight: 0,
+            weight: '',
             date: null
         },
         onSubmit: async (values) => {
@@ -62,7 +62,7 @@ export const AddSale = observer(() => {
                     </Select>
                 </Grid>
                 <Grid item xs={4}>
-                    <TextField label={'Объем'} onChange={saleFormik.handleChange} name='weight' type="number"
+                    <TextField label={'Объем'} onChange={saleFormik.handleChange} name='weight' type="text"
                                fullWidth/>
                 </Grid>
                 <Grid item xs={4}>

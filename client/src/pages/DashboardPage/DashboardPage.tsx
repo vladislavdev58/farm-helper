@@ -26,7 +26,7 @@ export const DashboardPage = observer(() => {
                     })
                 }
             } catch (e) {
-                console.log(e.message)
+                stores?.userStore.enqueueSnackbar(e.message, 'error')
             }
             setLoadingCorn(false)
         })()
@@ -35,13 +35,17 @@ export const DashboardPage = observer(() => {
     useEffect(() => {
         (
             async () => {
-                setLoadingSale(true)
-                const result: TypeSaleData[] = await loadSale()
-                console.log(result)
-                if (stores?.cornStore) {
-                    runInAction(() => {
-                        stores.cornStore.allSale = result
-                    })
+                try {
+                    setLoadingSale(true)
+                    const result: TypeSaleData[] = await loadSale()
+                    console.log(result)
+                    if (stores?.cornStore) {
+                        runInAction(() => {
+                            stores.cornStore.allSale = result
+                        })
+                    }
+                } catch (e) {
+                    stores?.userStore.enqueueSnackbar(e.message, 'error')
                 }
                 setLoadingSale(false)
             }

@@ -12,8 +12,8 @@ export const AddCorn = () => {
     const cornFormik = useFormik<TypeCornForm>({
         initialValues: {
             name: '',
-            weight: 0,
-            cost: 0
+            weight: '0',
+            cost: '0'
         },
         onSubmit: async (values) => {
             try {
@@ -38,11 +38,11 @@ export const AddCorn = () => {
                                fullWidth/>
                 </Grid>
                 <Grid item xs={4}>
-                    <TextField label={'Объем'} onChange={cornFormik.handleChange} name='weight' type="number"
+                    <TextField label={'Объем'} onChange={cornFormik.handleChange} name='weight' type="text"
                                fullWidth/>
                 </Grid>
                 <Grid item xs={4}>
-                    <TextField label={'Стоимость'} onChange={cornFormik.handleChange} name='cost' type="number"
+                    <TextField label={'Стоимость'} onChange={cornFormik.handleChange} name='cost' type="text"
                                fullWidth/>
                 </Grid>
             </Grid>

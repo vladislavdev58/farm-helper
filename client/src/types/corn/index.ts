@@ -10,6 +10,6 @@ export type TypeCornData = {
 
 export type TypeCornForm = {
     name: string
-    weight: number
-    cost: number
+    weight: string
+    cost: string
 }
