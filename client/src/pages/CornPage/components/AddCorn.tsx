@@ -3,7 +3,6 @@ import {useFormik} from 'formik'
 import {runInAction} from 'mobx'
 import {Box, Button, Grid, TextField} from '@material-ui/core'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
-import {useSnackbar} from 'notistack'
 import StoreContext from '../../../context/StoreContext'
 import {addCorn} from '../../../api'
 

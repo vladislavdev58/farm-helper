@@ -1,12 +1,8 @@
 import React, {FC, useContext, useState} from 'react'
-import {useHttp} from '../../../hooks/http.hook'
-import {AuthContext} from '../../../context/AuthContext'
 import {useFormik} from 'formik'
-import {Loader} from '../../../components/Loader'
 import {runInAction} from 'mobx'
 import {Box, Button, Grid, TextField} from '@material-ui/core'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
-import {useSnackbar} from 'notistack'
 import StoreContext from '../../../context/StoreContext'
 import {addPoisons} from '../../../api'
 
