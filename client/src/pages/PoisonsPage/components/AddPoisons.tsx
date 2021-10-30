@@ -5,18 +5,12 @@ import {Box, Button, Grid, TextField} from '@material-ui/core'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import StoreContext from '../../../context/StoreContext'
 import {addPoisons} from '../../../api'
-
-type TypeForm = {
-    name: string
-    weight: number
-    cost: number
-    date: Date | null
-}
+import {TypePoisonsData, TypePoisonsForm} from '../../../types/poisons'
 
 export const AddPoisons: FC = () => {
     const stores = useContext(StoreContext)
     const [loading, setLoading] = useState(false)
-    const poisonsFormik = useFormik<TypeForm>({
+    const poisonsFormik = useFormik<TypePoisonsForm>({
         initialValues: {
             name: '',
             weight: 0,
@@ -27,7 +21,7 @@ export const AddPoisons: FC = () => {
             setLoading(true)
             try {
                 const result = await addPoisons(values)
-                const {poison} = result
+                const {poison} : {poison: TypePoisonsData} = result
                 if (stores?.cornStore) {
                     runInAction(() => {
                         stores.cornStore.allPoisons = [...stores.cornStore.allPoisons, ...[poison]]

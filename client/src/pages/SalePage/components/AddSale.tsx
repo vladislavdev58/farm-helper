@@ -6,18 +6,13 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import {Box, Button, Grid, InputLabel, MenuItem, Select, TextField} from '@material-ui/core'
 import StoreContext from '../../../context/StoreContext'
 import {addSale} from '../../../api'
+import {TypeSaleData, TypeSaleForm} from '../../../types/sale'
+import {TypeCornData} from '../../../types/corn'
 
-
-type TypeForm = {
-    _id: string | undefined
-    weight: number
-    date: Date | null
-}
-
-export const AddSale = observer((store:any) => {
+export const AddSale = observer(() => {
     const stores = useContext(StoreContext)
     const [loading, setLoading] = useState(false)
-    const saleFormik = useFormik<TypeForm>({
+    const saleFormik = useFormik<TypeSaleForm>({
         initialValues: {
             _id: stores?.cornStore.allCorn[0]._id,
             weight: 0,
@@ -27,7 +22,7 @@ export const AddSale = observer((store:any) => {
             setLoading(true)
             try {
                 const result = await addSale(values)
-                const {sale, updateCorn} = result
+                const {sale, updateCorn} : {sale: TypeSaleData, updateCorn: TypeCornData} = result
                 if (stores?.cornStore) {
                     runInAction(() => {
                         stores.cornStore.allSale = [...stores.cornStore.allSale, ...[sale]]
@@ -42,7 +37,7 @@ export const AddSale = observer((store:any) => {
         }
     })
 
-    const setCorn = (updateCorn:any) => {
+    const setCorn = (updateCorn:TypeCornData) => {
         const indexSearch = stores?.cornStore.allCorn.findIndex(item => item._id === updateCorn._id)
         if (indexSearch && indexSearch !== -1 && stores?.cornStore) {
             runInAction(() => {

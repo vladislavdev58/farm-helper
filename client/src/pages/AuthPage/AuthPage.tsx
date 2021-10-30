@@ -5,11 +5,7 @@ import bg from './images/bg.jpg'
 import {login, register} from '../../api'
 import StoreContext from '../../context/StoreContext'
 import {observer} from 'mobx-react-lite'
-
-type FormType = {
-    email: string
-    password: string
-}
+import {TypeAuthData} from '../../types/auth'
 
 type StorageType = {
     userId: string | null
@@ -30,7 +26,7 @@ const useStyles = makeStyles({
 export const AuthPage = observer(() => {
     const stores = useContext(StoreContext)
     const classes = useStyles();
-    const [form, setForm] = useState<FormType>({
+    const [form, setForm] = useState<TypeAuthData>({
         email: '',
         password: ''
     })

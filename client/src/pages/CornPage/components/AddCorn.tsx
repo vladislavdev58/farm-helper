@@ -5,16 +5,11 @@ import {Box, Button, Grid, TextField} from '@material-ui/core'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import StoreContext from '../../../context/StoreContext'
 import {addCorn} from '../../../api'
-
-type TypeForm = {
-    name: string
-    weight: number
-    cost: number
-}
+import {TypeCornData, TypeCornForm} from '../../../types/corn'
 
 export const AddCorn = () => {
     const stores = useContext(StoreContext)
-    const cornFormik = useFormik<TypeForm>({
+    const cornFormik = useFormik<TypeCornForm>({
         initialValues: {
             name: '',
             weight: 0,
@@ -23,7 +18,7 @@ export const AddCorn = () => {
         onSubmit: async (values) => {
             try {
                 const result = await addCorn(values)
-                const {corn} = result
+                const {corn} : {corn: TypeCornData} = result
                 if (stores?.cornStore) {
                     runInAction(() => {
                         stores.cornStore.allCorn = [...stores?.cornStore.allCorn, ...[corn]]

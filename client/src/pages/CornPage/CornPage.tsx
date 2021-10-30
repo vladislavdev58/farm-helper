@@ -8,7 +8,7 @@ import RemoveIcon from '@material-ui/icons/Remove'
 import {observer} from 'mobx-react-lite'
 
 export const CornPage = observer(() => {
-    const [isShowForm, setIsShowForm] = useState<boolean>(false)
+    const [isShowForm, setIsShowForm] = useState(false)
     return (
         <MainLayout>
             <Box my={5}>

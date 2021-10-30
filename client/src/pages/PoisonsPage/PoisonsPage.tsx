@@ -3,7 +3,6 @@ import {MainLayout} from '../../layouts/MainLayout/MainLayout'
 import {Loader} from '../../components/Loader'
 import {AddPoisons} from './components/AddPoisons'
 import {PoisonsTable} from './components/PoisonsTable'
-import {TypePoisons} from '../../types/types'
 import {observer} from 'mobx-react-lite'
 import {runInAction} from 'mobx'
 import {Box, Button, Grid, Typography} from '@material-ui/core'
@@ -11,6 +10,7 @@ import RemoveIcon from '@material-ui/icons/Remove'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import StoreContext from '../../context/StoreContext'
 import {loadPoisons} from '../../api'
+import {TypePoisonsData} from '../../types/poisons'
 
 
 export const PoisonsPage = observer(() => {
@@ -21,7 +21,7 @@ export const PoisonsPage = observer(() => {
             async () => {
                 setLoading(true)
                 try {
-                    const result:TypePoisons[] = await loadPoisons()
+                    const result:TypePoisonsData[] = await loadPoisons()
                     if(stores?.cornStore) {
                         runInAction(() => {
                             stores.cornStore.allPoisons = result

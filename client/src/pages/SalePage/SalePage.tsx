@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useState} from 'react'
 import {MainLayout} from '../../layouts/MainLayout/MainLayout'
 import {AddSale} from './components/AddSale'
 import {SaleTable} from './components/SaleTable'
-import {TypeSale} from '../../types/types'
 import {runInAction} from 'mobx'
 import {Loader} from '../../components/Loader'
 import {observer} from 'mobx-react-lite'
@@ -11,16 +10,17 @@ import RemoveIcon from '@material-ui/icons/Remove'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import StoreContext from '../../context/StoreContext'
 import {loadSale} from '../../api'
+import {TypeSaleData} from '../../types/sale'
 
 export const SalePage = observer(() => {
     const stores = useContext(StoreContext)
     const [loading, setLoading] = useState(false)
-    const [isShowForm, setIsShowForm] = useState<boolean>(false)
+    const [isShowForm, setIsShowForm] = useState(false)
     useEffect(() => {
         (
             async () => {
                 setLoading(true)
-                const result:TypeSale[] = await loadSale()
+                const result:TypeSaleData[] = await loadSale()
                 if (stores?.cornStore) {
                     runInAction(() => {
                         stores.cornStore.allSale = result

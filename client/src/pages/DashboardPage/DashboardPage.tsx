@@ -7,13 +7,14 @@ import {CornStatic} from './components/CornStatic'
 import {loadCorn} from '../../api'
 import StoreContext from '../../context/StoreContext'
 import {runInAction} from 'mobx'
+import {TypeCornData} from '../../types/corn'
 
 export const DashboardPage = observer(() => {
     const stores = useContext(StoreContext)
     useEffect(() => {
         (async () => {
             try {
-                const result = await loadCorn()
+                const result:TypeCornData[] = await loadCorn()
                 if (stores?.cornStore) {
                     runInAction(() => {
                         stores.cornStore.allCorn = result
@@ -26,7 +27,7 @@ export const DashboardPage = observer(() => {
     }, [stores?.cornStore])
 
     const allSale = {
-        labels: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октрябрь', 'Ноябрь', 'Декабрь'],
+        labels: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
         datasets: [
             {
                 label: 'Рожь',
