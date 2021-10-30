@@ -39,14 +39,18 @@ const request = async (method: 'POST' | 'PUT' | 'GET', url: string, data: any = 
     return result
 }
 
-export const login = async (form: loginType) => await request('POST', '/api/auth/login', form)
+export const login = (form: loginType) => request('POST', '/api/auth/login', form)
 
-export const register = async (form: loginType) => await request('POST', '/api/auth/register', form)
+export const register = (form: loginType) => request('POST', '/api/auth/register', form)
 
-export const loadingCorn = async () => await request('GET', '/api/tables/corn')
+export const loadingCorn = () => request('GET', '/api/tables/corn')
 
-export const addCorn = async (form:any) => await request('PUT', '/api/tables/corn', form)
+export const addCorn = (form:any) => request('PUT', '/api/tables/corn', form)
 
 export const loadingPoisons = () => request('GET', '/api/tables/corn')
 
 export const addPoisons = (form: any) => request('PUT', '/api/tables/poisons', form)
+
+export const loadingSale = () => request('GET', '/api/tables/sale')
+
+export const addSale = (form: any) => request('PUT', '/api/tables/sale', form)

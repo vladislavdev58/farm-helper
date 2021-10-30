@@ -12,30 +12,29 @@ import {Box, Button, Grid, Typography} from '@material-ui/core'
 import RemoveIcon from '@material-ui/icons/Remove'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import StoreContext from '../../context/StoreContext'
+import {loadingSale} from '../../api'
 
 export const SalePage = observer(() => {
     const stores = useContext(StoreContext)
-    const {loading, request} = useHttp()
-    const {token} = useContext(AuthContext)
-    const fetchSale = useCallback(async () => {
-        try {
-            const fetched: TypeSale[] = await request('api/sale/get', 'GET', null, {
-                Authorization: `Bearer ${token}`
-            })
-            if (stores?.cornStore) {
-                runInAction(() => {
-                    stores.cornStore.allSale = fetched
-                })
-            }
-        } catch (e) {
-        }
-    }, [token, request])
-
-    useEffect(() => {
-        fetchSale()
-    }, [fetchSale])
+    const [loading, setLoading] = useState(false)
     const [isShowForm, setIsShowForm] = useState<boolean>(false)
+    useEffect(() => {
+        (
+            async () => {
+                setLoading(true)
+                const result:TypeSale[] = await loadingSale()
+                if (stores?.cornStore) {
+                    runInAction(() => {
+                        stores.cornStore.allSale = result
+                    })
+                }
+                setLoading(false)
+            }
+        )()
+    }, [])
+
     if (loading) return <MainLayout><Loader/></MainLayout>
+
     return(
         <MainLayout>
             <Box my={5}>

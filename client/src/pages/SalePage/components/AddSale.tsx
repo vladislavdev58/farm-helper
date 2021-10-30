@@ -1,14 +1,15 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import {useFormik} from 'formik'
 import {AuthContext} from '../../../context/AuthContext'
 import {useHttp} from '../../../hooks/http.hook'
-import {runInAction} from 'mobx'
+import {runInAction, toJS} from 'mobx'
 import {Loader} from '../../../components/Loader'
 import {observer} from 'mobx-react-lite'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import {Box, Button, Grid, InputLabel, MenuItem, Select, TextField} from '@material-ui/core'
 import {useSnackbar} from 'notistack'
 import StoreContext from '../../../context/StoreContext'
+import {addSale} from '../../../api'
 
 
 type TypeForm = {
@@ -19,7 +20,7 @@ type TypeForm = {
 
 export const AddSale = observer((store:any) => {
     const stores = useContext(StoreContext)
-    const { enqueueSnackbar } = useSnackbar()
+    const [loading, setLoading] = useState(false)
     const saleFormik = useFormik<TypeForm>({
         initialValues: {
             _id: stores?.cornStore.allCorn[0]._id,
@@ -27,46 +28,43 @@ export const AddSale = observer((store:any) => {
             date: null
         },
         onSubmit: async (values) => {
-            await addHandler(values)
+            setLoading(true)
+            try {
+                const result = await addSale(values)
+                const {sale, updateCorn} = result
+                if (stores?.cornStore) {
+                    runInAction(() => {
+                        stores.cornStore.allSale = [...stores.cornStore.allSale, ...[sale]]
+                    })
+                    setCorn(updateCorn)
+                    stores.userStore.enqueueSnackbar(result.message, 'success')
+                }
+            } catch (e) {
+                stores?.userStore.enqueueSnackbar(e.message, 'error')
+            }
+            setLoading(false)
         }
     })
-    console.log(store)
-    const auth = useContext(AuthContext)
-    const {loading, request} = useHttp()
-    const addHandler = async (values: TypeForm) => {
-        try {
-            const data = await request('/api/sale/add', 'POST', {...values}, {
-                Authorization: `Bearer: ${auth.token}`
-            })
-            const {sale} = data
-            if (stores?.cornStore) {
-                runInAction(() => {
-                    stores.cornStore.allCorn = [...stores.cornStore.allCorn, ...[sale]]
-                })
-            }
-            enqueueSnackbar(data.message, {
-                variant: 'success',
-            })
-        } catch (e) {
-            console.log(e)
-            enqueueSnackbar(e.message, {
-                variant: 'error',
+
+    const setCorn = (updateCorn:any) => {
+        const indexSearch = stores?.cornStore.allCorn.findIndex(item => item._id == updateCorn._id)
+        if (indexSearch && indexSearch !== -1 && stores?.cornStore) {
+            runInAction(() => {
+                stores.cornStore.allCorn[indexSearch] = updateCorn
             })
         }
     }
-    if (loading) {
-        return <Loader/>
-    }
+
     return (
         <form onSubmit={saleFormik.handleSubmit}>
             <Grid container spacing={5}>
                 <Grid item xs={4}>
                     <InputLabel id="selectLabel">Выберите зерно</InputLabel>
-                    <Select labelId="selectLabel" id="select" defaultValue={store.cornStore.allCorn[0]._id} name='_id'
+                    <Select labelId="selectLabel" id="select" defaultValue={stores?.cornStore.allCorn[0]._id} name='_id'
                             onChange={event => saleFormik.setFieldValue('_id', event.target.value)}
                             fullWidth>
                         {
-                            stores?.cornStore.allCorn.map(({_id, name, cost, weight}) =>
+                            stores?.cornStore.allCorn && stores.cornStore.allCorn.map(({_id, name, cost, weight}) =>
                                 <MenuItem value={_id} key={_id}>{`${name}(${cost}₽, ${weight}кг)`}</MenuItem>
                             )
                         }
@@ -96,6 +94,7 @@ export const AddSale = observer((store:any) => {
                     color="primary"
                     startIcon={<CloudUploadIcon/>}
                     type="submit"
+                    disabled={loading}
                 >
                     Добавить
                 </Button>

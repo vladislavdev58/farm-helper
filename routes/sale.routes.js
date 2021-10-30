@@ -5,8 +5,8 @@ const router = Router()
 const auth = require('../moddleware/auth.moddleware')
 const {check, validationResult} = require("express-validator");
 
-router.post(
-    '/add',
+router.put(
+    '/sale',
     [
         check('_id', 'Выберите что продали').notEmpty(),
         check('weight', 'Объем должен быть больше нуля').isInt({min: 1}),
@@ -48,7 +48,7 @@ router.post(
         }
     })
 
-router.get('/get', auth, async (req, res) => {
+router.get('/sale', auth, async (req, res) => {
     try {
         const sale = await Sale.find({owner: req.user.userId})
         res.json(sale)
