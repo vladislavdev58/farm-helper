@@ -6,7 +6,6 @@ const config = require('config')
 const randomcolor = require('randomcolor')
 
 router.put('/corn', auth, async (req, res) => {
-    console.log(req.body)
     try {
         const {name, weight, cost} = req.body
         const color = randomcolor({count: 2})

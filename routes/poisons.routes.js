@@ -14,7 +14,6 @@ router.put('/poisons', auth, async (req, res) => {
         await poison.save()
         res.status(201).json({poison})
     } catch (e) {
-        console.log(e)
         res.status(500).json({message: 'Что-то пошло не так'})
     }
 })

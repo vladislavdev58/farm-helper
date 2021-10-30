@@ -29,7 +29,7 @@ export const SalePage = observer(() => {
                 setLoading(false)
             }
         )()
-    }, [])
+    }, [stores?.cornStore])
 
     if (loading) return <MainLayout><Loader/></MainLayout>
 

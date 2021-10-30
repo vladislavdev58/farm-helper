@@ -8,7 +8,6 @@ import StoreContext from '../../../context/StoreContext'
 export const CornTable = observer(() => {
     const stores = useContext(StoreContext)
     const sortBy = (name: string) => {
-        console.log(name)
         runInAction(() => {
             stores?.cornStore.allCorn.sort((a: any, b: any) => a[name] < b[name] ? 1 : -1)
         })

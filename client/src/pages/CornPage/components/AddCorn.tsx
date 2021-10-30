@@ -24,7 +24,6 @@ export const AddCorn = () => {
             try {
                 const result = await addCorn(values)
                 const {corn} = result
-                console.log(result)
                 if (stores?.cornStore) {
                     runInAction(() => {
                         stores.cornStore.allCorn = [...stores?.cornStore.allCorn, ...[corn]]

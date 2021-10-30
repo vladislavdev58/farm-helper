@@ -43,7 +43,7 @@ export const AddSale = observer((store:any) => {
     })
 
     const setCorn = (updateCorn:any) => {
-        const indexSearch = stores?.cornStore.allCorn.findIndex(item => item._id == updateCorn._id)
+        const indexSearch = stores?.cornStore.allCorn.findIndex(item => item._id === updateCorn._id)
         if (indexSearch && indexSearch !== -1 && stores?.cornStore) {
             runInAction(() => {
                 stores.cornStore.allCorn[indexSearch] = updateCorn

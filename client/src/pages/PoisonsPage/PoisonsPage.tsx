@@ -33,7 +33,7 @@ export const PoisonsPage = observer(() => {
                 setLoading(false)
             }
         )()
-    }, [])
+    }, [stores?.cornStore])
 
     const [isShowForm, setIsShowForm] = useState<boolean>(false)
     if (loading) {

@@ -23,7 +23,7 @@ export const DashboardPage = observer(() => {
                 console.log(e.message)
             }
         })()
-    }, [])
+    }, [stores?.cornStore])
 
     const allSale = {
         labels: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октрябрь', 'Ноябрь', 'Декабрь'],

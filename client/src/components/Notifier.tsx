@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import {useContext, useEffect} from 'react'
 import StoreContext from '../context/StoreContext'
 import {useSnackbar} from 'notistack'
 import {observer} from 'mobx-react-lite'

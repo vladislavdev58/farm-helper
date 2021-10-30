@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useEffect, useCallback} from 'react'
 import {BrowserRouter as Router} from 'react-router-dom'
 import {observer} from 'mobx-react-lite'
 import {Routes} from './Routes'
@@ -13,7 +13,7 @@ type localStorageType = {
 
 const App = observer(() => {
     const stores = useContext(StoreContext)
-    const checkAuth = () => {
+    const checkAuth = useCallback(() => {
         const storage: string | null = localStorage.getItem('userData')
         if (!storage) {
             return
@@ -24,11 +24,11 @@ const App = observer(() => {
             stores.userStore.token = token
             stores.userStore.userId = userId
         }
-    }
+    }, [stores])
 
     useEffect(() => {
         checkAuth()
-    }, [])
+    }, [checkAuth])
     return (
         <>
             <Notifier/>

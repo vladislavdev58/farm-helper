@@ -47,7 +47,7 @@ export const loadCorn = () => request('GET', '/api/tables/corn')
 
 export const addCorn = (form:any) => request('PUT', '/api/tables/corn', form)
 
-export const loadPoisons = () => request('GET', '/api/tables/corn')
+export const loadPoisons = () => request('GET', '/api/tables/poisons')
 
 export const addPoisons = (form: any) => request('PUT', '/api/tables/poisons', form)
 
