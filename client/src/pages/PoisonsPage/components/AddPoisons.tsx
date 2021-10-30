@@ -50,6 +50,19 @@ export const AddPoisons: FC = () => {
                     <TextField label={'Цена(руб)'} onChange={poisonsFormik.handleChange} name='cost' type="number"
                                fullWidth/>
                 </Grid>
+                <Grid item xs={4}>
+                    <TextField
+                        id="date"
+                        label="Дата продажи"
+                        type="date"
+                        onChange={poisonsFormik.handleChange}
+                        defaultValue={null}
+                        fullWidth
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                    />
+                </Grid>
             </Grid>
             <Box my={3}>
                 <Button
