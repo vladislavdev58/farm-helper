@@ -13,7 +13,7 @@ app.use('/api/tables', require('./routes/corn.routes'), require('./routes/poison
 if (process.env.NODE_ENV === 'production') {
     app.use('/', express.static(path.join(__dirname, 'client', 'build')))
 
-    app.get('farm.tweed24.icu', (req, res) => {
+    app.get('*', (req, res) => {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
     })
 }
